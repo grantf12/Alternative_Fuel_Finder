@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fuel Finder</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/14c899f3d3.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item title m-3" href="index2.html"> <span class="icon is-medium m-2">
+                    <i class="fas fa-gas-pump"></i>
+                </span><span> Fuel Finder</a></span>
+            <div role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+                data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </div>
+        </div>
+        <div id="navbar-menu-id is-dark" class="navbar-menu">
+            <div class="navbar-end"></div>
+            <a class="navbar-item has-text-light has-text-weight-bold" href="electric.html">
+                Electric Vehicles
+            </a>
+            <a class="navbar-item has-text-light has-text-weight-bold" href="gas.html">
+                Gas Vehicles
+            </a>
+        </div>
+    </nav>
+    <div class="container m-3">
+        <h1 class="title has-text-centered">
+            Find fueling stations near you!
+        </h1>
+        <p class="subtitle has-text-centered">
+            Cheapest? Closest? Want to compare savings? You decide!
+        </p>
+    </div>
+    <div class="container m-3 mt-5 has-text-centered">
+        <div class="select is-rounded is-dark is-large" id="select-vehicle-type">
+            <select>
+                <option>Select type of vehicle</option>
+                <option>Gas</option>
+                <option>Electric</option>
+            </select>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="JsFiles/bulma.js">
+
+    </script>
+</body>
+
+</html>
