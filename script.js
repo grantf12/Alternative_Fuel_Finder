@@ -29,4 +29,5 @@ $("#exampleBtn").click(function(){
       }).then(function (response) {
           console.log(response);
       })
+    makeFuelList();
 })
