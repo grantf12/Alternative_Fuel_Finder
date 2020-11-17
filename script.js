@@ -1,13 +1,13 @@
-let apiKey = '3037486a16mshc6512bad445d222p100853jsnc25d6486900b';
+let apiKey ='3037486a16mshc6512bad445d222p100853jsnc25d6486900b'
 
 
 
-var fuelOutPut = $('#example').val();
+var fuelOutPut = $('#example').val()
 
-var searchResults= [];
 
-function makeFuelList() {
-    let = $('<li>', '<button>').addClass('btn list-group-item').text(station);
+
+function makeFuelList(){
+    let = $('<li>','<button>').addClass('btn list-group-item').text(station);
     $('list').append(listItem)
 };
 
@@ -16,7 +16,7 @@ function makeFuelList() {
 //Section of code below is for the user input to be displayed on the dashboard listed
 //=======================================================
 //the submit button
-$("#exampleBtn").click(function () {
+$("#exampleBtn").click(function(){
     event.preventDefault();
     example = $('#example').val();
     $('#example').val("");
@@ -26,14 +26,8 @@ $("#exampleBtn").click(function () {
     $.ajax({
         url: queryUrl,
         method: "GET"
-    }).then(function (response) {
-        console.log(response);
-    })
+      }).then(function (response) {
+          console.log(response);
+      })
     makeFuelList();
-});
-//=====================================================================================
-//if there is time try to make a for loop for the gas station brand to populate that list
-
-//funtion populateGasBrand(){
-//}
-//=========================================================================================
+})
