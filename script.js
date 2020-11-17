@@ -4,7 +4,13 @@ let apiKey ='3037486a16mshc6512bad445d222p100853jsnc25d6486900b'
 
 var fuelOutPut = $('#example').val()
 
-
+$("#select-vehicle-type").on("change", function() {
+    if ($("#select-vehicle-type : selected") === "gas"){
+        $("#gas-container").attr("class", "select is-rounded is-dark is-large");
+    } else {
+        $("#gas-container").attr("class", "select is-rounded is-dark is-large is-hidden")
+    }
+}
 
 function makeFuelList(){
     let = $('<li>','<button>').addClass('btn list-group-item').text(station);

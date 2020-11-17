@@ -11,28 +11,14 @@
 </head>
 
 <body>
+<!-- Nav Bar -->
     <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item title m-3" href="index2.html"> <span class="icon is-medium m-2">
                     <i class="fas fa-gas-pump"></i>
                 </span><span> Fuel Finder</a></span>
-            <!-- <div role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
-                data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </div>
-        </div>
-        <div id="navbar-menu-id is-dark" class="navbar-menu">
-            <div class="navbar-end"></div>
-            <a class="navbar-item has-text-light has-text-weight-bold" href="electric.html">
-                Electric Vehicles
-            </a>
-            <a class="navbar-item has-text-light has-text-weight-bold" href="gas.html">
-                Gas Vehicles
-            </a>
-        </div> -->
     </nav>
+<!-- Heading/Title -->
     <div class="container m-3">
         <h1 class="title has-text-centered">
             Find fueling stations near you!
@@ -41,7 +27,7 @@
             Cheapest? Closest? Want to compare savings? You decide!
         </p>
     </div>
-    <-
+<!-- Vehicle Type Select -->
     <div class="container m-3 mt-5 has-text-centered">
         <div class="row m-5 has-text-centered">
             <div class="select is-rounded is-dark is-large" id="select-vehicle-type">
@@ -52,6 +38,7 @@
                 </select>
             </div>
         </div>
+<!-- Radius Select -->
         <div class="row m-5 has-text-centered">
             <div class="select is-rounded is-dark is-large" id="select-radius">
                 <select>
@@ -63,6 +50,7 @@
                 </select>
             </div>
         </div>
+<!-- Brand Select-->
         <div class="row m-5 has-text-centered">
             <div class="select is-rounded is-dark is-large" id="select-brand">
                 <select>
@@ -82,7 +70,9 @@
             </div>
         </div>
     </div>
-    <div class="container m-3 mt-5 has-text-centered" id="gas-container">
+<!-- Gas Container -->
+    <div class="container m-3 mt-5 has-text-centered is-hidden" id="gas-container">
+<!-- Gas Fuel Type Select -->
         <div class="select is-rounded is-dark is-large" id="select-fuel-type">
             <select>
                 <option>Select fuel type</option>
@@ -93,7 +83,11 @@
             </select>
         </div>
     </div>
+<!-- Address/Current Location Input -->
     <div class="container m-3 mt-5 has-text-centered">
+            <input class="input is-large is-rounded" type="text" placeholder="Input Address Or Use Current Location">
+        </div>
+<!-- Sort Select-->
         <div class="row m-5 has-text-centered">
             <div class="select is-rounded is-dark is-large" id="select-radius">
                 <select>
@@ -104,14 +98,25 @@
                 </select>
             </div>
         </div>
+<!-- Submit Button-->
         <div class="row m-5 has-text-centered">
             <div class="container m-3 mt-5 has-text-centered" id="submit-container">
                 <input class="button is-large is-rounded" type="submit" value="Start Your Search" id="submit-type">
             </div>
         </div>
     </div>
+<!--Modal for search results-->
+    <div class="modal" id="results">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+          <!-- Any other Bulma elements you want -->
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+      </div>
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="JsFiles/bulma.js">
+    <script src="script.js">
 
     </script>
 </body>
