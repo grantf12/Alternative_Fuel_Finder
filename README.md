@@ -2,7 +2,7 @@
 
 
 ## Link to Deployed Website
-click [here](https://grantf12.github.io/Project_1/index.html)
+click [here](https://grantf12.github.io/Project_1/index2.html)
 
 ### Wesite in Action
 
