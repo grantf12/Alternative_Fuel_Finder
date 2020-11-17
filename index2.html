@@ -50,16 +50,16 @@
             </select>
         </div>
         <div class="row m-5">
-        <div class="select is-rounded is-dark is-large" id="select-radius">
-            <select>
-                <option>Select search radius</option>
-                <option value="1">1</option>
-                <option value="3">3</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
-            </select>
+            <div class="select is-rounded is-dark is-large" id="select-radius">
+                <select>
+                    <option>Select search radius</option>
+                    <option value="1">1 mile</option>
+                    <option value="3">3 miles</option>
+                    <option value="5">5 miles</option>
+                    <option value="10">10 miles</option>
+                </select>
+            </div>
         </div>
-    </div>
         <div class="select is-rounded is-dark is-large" id="select-brand">
             <select>
                 <option>Select Gas Station Brand (Optional)</option>
@@ -88,8 +88,17 @@
             </select>
         </div>
     </div>
-
-    <div class = "container m-3 mt-5 has-text-centered" id="submit-container">
+    <div class="row m-5">
+        <div class="select is-rounded is-dark is-large" id="select-radius">
+            <select>
+                <option>Sort By:</option>
+                <option value="price-low">Price (Low to High)</option>
+                <option value="distance-close">Distance (Closest)</option>
+                <option value="savings">Savings (Most to Least)</option>
+            </select>
+        </div>
+    </div>
+    <div class="container m-3 mt-5 has-text-centered" id="submit-container">
         <input class="button is-large is-rounded" type="submit" value="Start Your Search" id="submit-type">
     </div>
 
