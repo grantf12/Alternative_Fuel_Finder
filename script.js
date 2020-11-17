@@ -91,4 +91,10 @@ $("#submit-type").click(function(event){
 // put geolocation function
 })
 
+$("#submit-button").on("click", function(){
+    $("#results").attr("class", "modal is-active");
+})
 
+$("#close-modal").on("click", function(){
+    $("#results").attr("class", "modal");
+})

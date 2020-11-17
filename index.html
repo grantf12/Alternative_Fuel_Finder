@@ -11,7 +11,7 @@
 </head>
 
 <body>
-   <!-- Title -->
+    <!-- Title -->
     <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item title m-3" href="index2.html"> <span class="icon is-medium m-2">
@@ -19,7 +19,7 @@
                 </span><span> Fuel Finder</a></span>
     </nav>
     <!-- Header -->
-    <div class="container m-3">
+    <div class="container mt-4">
         <h1 class="title has-text-centered">
             Find fueling stations near you!
         </h1>
@@ -28,8 +28,8 @@
         </p>
     </div>
     <!-- Gas or Electric -->
-    <div class="container m-3 mt-5 has-text-centered">
-        <div class="row m-5 has-text-centered">
+    <div class="container mt-5 has-text-centered">
+        <div class="row mt-5">
             <div class="select is-rounded is-dark is-large" id="select-vehicle-type">
                 <select>
                     <option>Select type of vehicle</option>
@@ -39,7 +39,7 @@
             </div>
         </div>
         <!-- Radius Select -->
-        <div class="row m-5 has-text-centered">
+        <div class="row mt-5">
             <div class="select is-rounded is-dark is-large" id="select-radius">
                 <select>
                     <option>Select search radius</option>
@@ -51,7 +51,7 @@
             </div>
         </div>
         <!-- Brand Select-->
-        <div class="row m-5 has-text-centered">
+        <div class="row mt-5">
             <div class="select is-rounded is-dark is-large" id="select-brand">
                 <select>
                     <option>Select Gas Station Brand (Optional)</option>
@@ -71,7 +71,7 @@
         </div>
     </div>
     <!-- Fuel Type -->
-    <div class="container m-3 mt-5 has-text-centered is-hidden" id="gas-container">
+    <div class="container mt-5 has-text-centered is-hidden" id="gas-container">
         <div class="select is-rounded is-dark is-large" id="select-fuel-type">
             <select>
                 <option>Select fuel type</option>
@@ -82,16 +82,21 @@
             </select>
         </div>
     </div>
-   <!-- Sort By & Submit Button -->
-    <div class="container m-3 mt-5 has-text-centered">
-        <label class="label is-size-4">Address (or use Current Location): </label>
-        <div class="control has-icons-left">
-            <input class="input is-large" type="text" placeholder="Current Location">
-            <span class="icon is-medium is-left">
-                <i class="fas fa-location-arrow"></i>
-            </span>
-          </div>
+    <!-- Address or Current Location -->
+    <div class="container mt-5 has-text-centered">
+        <div class="row m-5">
+            <label class="label is-size-4">Address (or use Current Location): </label>
+        </div>
+        <div class="container columns m-5 is-centered">
+            <div class="control has-icons-left">
+                <input class="input is-large column" type="text" placeholder="Current Location">
+                <span class="icon is-medium is-left">
+                    <i class="fas fa-location-arrow"></i>
+                </span>
+            </div>
+        </div>
     </div>
+
     <!-- Sort Select-->
     <div class="row m-5 has-text-centered">
         <div class="select is-rounded is-dark is-large" id="select-radius">
@@ -105,28 +110,48 @@
     </div>
     <!-- Submit Button-->
     <div class="row m-5 has-text-centered">
-        <div class="container m-3 mt-5 has-text-centered" id="submit-container">
-            <input class="button is-large is-rounded" type="submit" value="Start Your Search" id="submit-type">
-        </div>
+        <input class="button is-large is-rounded" type="submit" value="Start Your Search" id="submit-button">
     </div>
     </div>
+
     <!--Modal for search results-->
     <div class="modal" id="results">
         <div class="modal-background"></div>
         <div class="modal-content">
             <!-- Results dynamically generated here -->
-            <div class="card">
-                <div class="card-content">
-                    <div class="title" id="name">GAS STATION NAME</div>
-                    <p class="subtitle" id="address">Example Address^7</p>
-                    <p id="price">$#.## per gallon</p>
-                    <p id="savings">$.## per gallon</p>
-                </div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Search Results:</p>
+                    <button class="delete" aria-label="close" id="close-modal"></button>
+                </header>
+                <section class="modal-card-body">
+                    <!--Example results to see Modal in action-->
+                    <div class="row">
+                        <div class="columns">
+                            <div class="column is-8">
+                                <div class="title" id="name">GAS STATION NAME</div>
+                                <p class="row subtitle" id="address">Example Address</p>
+                            </div>
+                            <div class="column is-4">
+                                <p class="row has-text-weight-bold has-text-right">Price per Gallon:</p>
+                                <p class="has-text-right" id="price">$#.## per gallon</p>
+                                <div class="row">
+                                    <p class="row has-text-weight-bold has-text-right">Savings:</p>
+                                    <p class="has-text-right" id="savings">$.## per gallon</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
-        <button class="modal-close is-large" aria-label="close"></button>
     </div>
-  
+    </section>
+
+    </div>
+    </div>
+    </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="script.js"></script>
 </body>
