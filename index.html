@@ -16,7 +16,7 @@
             <a class="navbar-item title m-3" href="index2.html"> <span class="icon is-medium m-2">
                     <i class="fas fa-gas-pump"></i>
                 </span><span> Fuel Finder</a></span>
-            <div role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+            <!-- <div role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
                 data-target="navbarBasicExample">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -31,7 +31,7 @@
             <a class="navbar-item has-text-light has-text-weight-bold" href="gas.html">
                 Gas Vehicles
             </a>
-        </div>
+        </div> -->
     </nav>
     <div class="container m-3">
         <h1 class="title has-text-centered">
@@ -41,15 +41,18 @@
             Cheapest? Closest? Want to compare savings? You decide!
         </p>
     </div>
+    <-
     <div class="container m-3 mt-5 has-text-centered">
-        <div class="select is-rounded is-dark is-large" id="select-vehicle-type">
-            <select>
-                <option>Select type of vehicle</option>
-                <option>Gas</option>
-                <option>Electric</option>
-            </select>
+        <div class="row m-5 has-text-centered">
+            <div class="select is-rounded is-dark is-large" id="select-vehicle-type">
+                <select>
+                    <option>Select type of vehicle</option>
+                    <option>Gas</option>
+                    <option>Electric</option>
+                </select>
+            </div>
         </div>
-        <div class="row m-5">
+        <div class="row m-5 has-text-centered">
             <div class="select is-rounded is-dark is-large" id="select-radius">
                 <select>
                     <option>Select search radius</option>
@@ -60,21 +63,23 @@
                 </select>
             </div>
         </div>
-        <div class="select is-rounded is-dark is-large" id="select-brand">
-            <select>
-                <option>Select Gas Station Brand (Optional)</option>
-                <option value="7-Eleven">7-Eleven</option>
-                <option value="Example1">Example1</option>
-                <option value="Example3">Example3</option>
-                <option value="Example4">Example4</option>
-                <option value="Example5">Example5</option>
-                <option value="Example6">Example6</option>
-                <option value="Example7">Example7</option>
-                <option value="Example8">Example8</option>
-                <option value="Example9">Example9</option>
-                <option value="Example10">Example10</option>
-                <option value="Example11">Example11</option>
-            </select>
+        <div class="row m-5 has-text-centered">
+            <div class="select is-rounded is-dark is-large" id="select-brand">
+                <select>
+                    <option>Select Gas Station Brand (Optional)</option>
+                    <option value="7-Eleven">7-Eleven</option>
+                    <option value="Example1">Example1</option>
+                    <option value="Example3">Example3</option>
+                    <option value="Example4">Example4</option>
+                    <option value="Example5">Example5</option>
+                    <option value="Example6">Example6</option>
+                    <option value="Example7">Example7</option>
+                    <option value="Example8">Example8</option>
+                    <option value="Example9">Example9</option>
+                    <option value="Example10">Example10</option>
+                    <option value="Example11">Example11</option>
+                </select>
+            </div>
         </div>
     </div>
     <div class="container m-3 mt-5 has-text-centered" id="gas-container">
@@ -88,18 +93,22 @@
             </select>
         </div>
     </div>
-    <div class="row m-5">
-        <div class="select is-rounded is-dark is-large" id="select-radius">
-            <select>
-                <option>Sort By:</option>
-                <option value="price-low">Price (Low to High)</option>
-                <option value="distance-close">Distance (Closest)</option>
-                <option value="savings">Savings (Most to Least)</option>
-            </select>
+    <div class="container m-3 mt-5 has-text-centered">
+        <div class="row m-5 has-text-centered">
+            <div class="select is-rounded is-dark is-large" id="select-radius">
+                <select>
+                    <option>Sort By:</option>
+                    <option value="price-low">Price (Low to High)</option>
+                    <option value="distance-close">Distance (Closest)</option>
+                    <option value="savings">Savings (Most to Least)</option>
+                </select>
+            </div>
         </div>
-    </div>
-    <div class="container m-3 mt-5 has-text-centered" id="submit-container">
-        <input class="button is-large is-rounded" type="submit" value="Start Your Search" id="submit-type">
+        <div class="row m-5 has-text-centered">
+            <div class="container m-3 mt-5 has-text-centered" id="submit-container">
+                <input class="button is-large is-rounded" type="submit" value="Start Your Search" id="submit-type">
+            </div>
+        </div>
     </div>
 
     <div class="container">
