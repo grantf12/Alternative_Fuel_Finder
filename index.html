@@ -11,14 +11,14 @@
 </head>
 
 <body>
-<!-- Nav Bar -->
+    <!-- NavBar -->
     <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item title m-3" href="index2.html"> <span class="icon is-medium m-2">
                     <i class="fas fa-gas-pump"></i>
                 </span><span> Fuel Finder</a></span>
     </nav>
-<!-- Heading/Title -->
+    <!-- Header -->
     <div class="container m-3">
         <h1 class="title has-text-centered">
             Find fueling stations near you!
@@ -27,18 +27,18 @@
             Cheapest? Closest? Want to compare savings? You decide!
         </p>
     </div>
-<!-- Vehicle Type Select -->
+    <!-- Gas or Electric -->
     <div class="container m-3 mt-5 has-text-centered">
         <div class="row m-5 has-text-centered">
             <div class="select is-rounded is-dark is-large" id="select-vehicle-type">
                 <select>
                     <option>Select type of vehicle</option>
-                    <option>Gas</option>
-                    <option>Electric</option>
+                    <option value="gas">Gas</option>
+                    <option value="electric">Electric</option>
                 </select>
             </div>
         </div>
-<!-- Radius Select -->
+        <!-- Radius Select -->
         <div class="row m-5 has-text-centered">
             <div class="select is-rounded is-dark is-large" id="select-radius">
                 <select>
@@ -50,7 +50,7 @@
                 </select>
             </div>
         </div>
-<!-- Brand Select-->
+        <!-- Brand Select-->
         <div class="row m-5 has-text-centered">
             <div class="select is-rounded is-dark is-large" id="select-brand">
                 <select>
@@ -70,9 +70,8 @@
             </div>
         </div>
     </div>
-<!-- Gas Container -->
+    <!-- Fuel Type -->
     <div class="container m-3 mt-5 has-text-centered is-hidden" id="gas-container">
-<!-- Gas Fuel Type Select -->
         <div class="select is-rounded is-dark is-large" id="select-fuel-type">
             <select>
                 <option>Select fuel type</option>
@@ -83,42 +82,53 @@
             </select>
         </div>
     </div>
-<!-- Address/Current Location Input -->
     <div class="container m-3 mt-5 has-text-centered">
-            <input class="input is-large is-rounded" type="text" placeholder="Input Address Or Use Current Location">
-        </div>
-<!-- Sort Select-->
-        <div class="row m-5 has-text-centered">
-            <div class="select is-rounded is-dark is-large" id="select-radius">
-                <select>
-                    <option>Sort By:</option>
-                    <option value="price-low">Price (Low to High)</option>
-                    <option value="distance-close">Distance (Closest)</option>
-                    <option value="savings">Savings (Most to Least)</option>
-                </select>
-            </div>
-        </div>
-<!-- Submit Button-->
-        <div class="row m-5 has-text-centered">
-            <div class="container m-3 mt-5 has-text-centered" id="submit-container">
-                <input class="button is-large is-rounded" type="submit" value="Start Your Search" id="submit-type">
-            </div>
+        <label class="label is-size-4">Address (or use Current Location): </label>
+        <div class="control has-icons-left">
+            <input class="input is-large" type="text" placeholder="Current Location">
+            <span class="icon is-medium is-left">
+                <i class="fas fa-location-arrow"></i>
+            </span>
+          </div>
+    </div>
+    <!-- Sort Select-->
+    <div class="row m-5 has-text-centered">
+        <div class="select is-rounded is-dark is-large" id="select-radius">
+            <select>
+                <option>Sort By:</option>
+                <option value="price-low">Price (Low to High)</option>
+                <option value="distance-close">Distance (Closest)</option>
+                <option value="savings">Savings (Most to Least)</option>
+            </select>
         </div>
     </div>
-<!--Modal for search results-->
+    <!-- Submit Button-->
+    <div class="row m-5 has-text-centered">
+        <div class="container m-3 mt-5 has-text-centered" id="submit-container">
+            <input class="button is-large is-rounded" type="submit" value="Start Your Search" id="submit-type">
+        </div>
+    </div>
+    </div>
+    <!--Modal for search results-->
     <div class="modal" id="results">
         <div class="modal-background"></div>
         <div class="modal-content">
-          <!-- Any other Bulma elements you want -->
+            <!-- Results dynamically generated here -->
+            <div class="card">
+                <div class="card-content">
+                    <div class="title" id="name">GAS STATION NAME</div>
+                    <p class="subtitle" id="address">Example Address^7</p>
+                    <p id="price">$#.## per gallon</p>
+                    <p id="savings">$.## per gallon</p>
+                </div>
+            </div>
         </div>
         <button class="modal-close is-large" aria-label="close"></button>
-      </div>
+    </div>
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="script.js">
-
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
