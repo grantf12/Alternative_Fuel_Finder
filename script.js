@@ -1,7 +1,5 @@
 let apiKey ='3037486a16mshc6512bad445d222p100853jsnc25d6486900b'
 
-
-
 var fuelOutPut = $('#example').val()
 
 
@@ -11,6 +9,13 @@ function makeFuelList(){
     $('list').append(listItem)
 };
 
+$("#select-vehicle-type").on("change", function(){
+    if ($("#select-vehicle-type :selected").val() === "gas") {
+        $("#gas-container").attr("class", "container m-3 mt-5 has-text-centered");
+    } else {
+        $("#gas-container").attr("class", "container m-3 mt-5 has-text-centered is-hidden");
+    }
+})
 
 //========================================================
 //Section of code below is for the user input to be displayed on the dashboard listed
@@ -31,3 +36,5 @@ $("#exampleBtn").click(function(){
       })
     makeFuelList();
 })
+
+
