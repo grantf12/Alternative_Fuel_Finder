@@ -1,8 +1,17 @@
 let apiKey ='3037486a16mshc6512bad445d222p100853jsnc25d6486900b'
-
+let appID = 'wu2NZ7wMWa5kcBJ2Okrx'
+let fuelAppApiKey = 'rBMnSNgmY86eyVSBI1tFCJ7G6J5rC3OcsyPwL7xOvIw'
 var fuelOutPut = $('#example').val()
+var 
 
 
+function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+  }
 
 function makeFuelList(){
     let = $('<li>','<button>').addClass('btn list-group-item').text(station);
@@ -33,7 +42,19 @@ $("#exampleBtn").click(function(){
         method: "GET"
       }).then(function (response) {
           console.log(response);
+
+
       })
+
+ $.ajax({
+        url: queryUrl,
+        method: "GET"
+      }).then(function (response) {
+          console.log(response);
+
+          
+      })
+
     makeFuelList();
 })
 
