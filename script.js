@@ -1,3 +1,4 @@
+
 let apiKey ='3037486a16mshc6512bad445d222p100853jsnc25d6486900b'
 let appID = 'wu2NZ7wMWa5kcBJ2Okrx'
 let fuelAppApiKey = 'rBMnSNgmY86eyVSBI1tFCJ7G6J5rC3OcsyPwL7xOvIw'
@@ -7,6 +8,7 @@ let userPosition = $("#result").val()
 
 //========================================================================
 // Geo Location functions
+//=======================================================
 if("geolocation" in navigator){
     navigator.geolocation.getCurrentPosition(function(position){
         console.log("Lat:" +position.coords.latitude+ "Lang :" + position.coords.longitude);
@@ -25,11 +27,40 @@ if("geolocation" in navigator){
 //		console.log("Browser doesn't support geolocation!");
 //	}
 //});
+//=======================================================
+//Global Vars
+//=======================================================
+//Json web token credentials
+let JSONwebToken ='0LUvCafeaQ4taVT6uNYleX6pNyF37UpsNJWgDabOXfUjUWcoXJ9m48ZT8M5ZWTMDSHcmFWmwjfHvuB7kBXSatw'
+let accessKeyId = 'JPP0pPukzSdRomRRqvuxgg'
+// Rest Api credentails
+let restAppId = "sQCEUM1tDeCqiMmQGE2X"
+let restApiKey = "Sk529ATwSKfY2Ms96plU1rkpHasGvgXHnjMUlEzu0HY"
+//Javascript Here credentails
+let jsAppId = "ZDmjBoiHdg5JILLoGycJ"
+let jsApiKey = "7esiAVsnoUKENkEqzzIAuEcxHBXcukTotE3H66oap5g"
 
-function makeFuelList(){
-    let = $('<li>','<button>').addClass('btn list-group-item').text(station);
-    $('list').append(listItem)
-};
+
+// Geo location variables
+// to retrieve current user postion
+
+var userpostion = getLocation();
+
+//========================================================================
+// Geo Location functions
+//=======================================================
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+     console.log("Geolocation is not supported by this browser.");
+  }
+}
+
+function showPosition(position) {
+  console.log(position.coords.latitude + "" + position.coords.longitude);
+}
 
 $("#select-vehicle-type").on("change", function(){
     if ($("#select-vehicle-type :selected").val() === "gas") {
@@ -43,21 +74,21 @@ $("#select-vehicle-type").on("change", function(){
 //Section of code below is for the user input to be displayed on the dashboard listed
 //=======================================================
 //the submit button
-$("#exampleBtn").click(function(){
+$("#submit-type").click(function(event){
     event.preventDefault();
-    example = $('#example').val();
-    $('#example').val("");
-
-    const queryUrl = "https://community-nrel-national-renewable-energy-laboratory.p.rapidapi.com/api/alt-fuel-stations/v1.json?state=North%20Carolina&zip=28217&fuel_type=E85%2CELEC&limit=2"
+    
+    const queryLocationUrl = "https://fuel-v2.cc.api.here.com/xsd/ACS-Fuel-201402.xsd?" + appID + appCode;
 
     $.ajax({
-        url: queryUrl,
+        url: queryLocationUrl,
         method: "GET"
       }).then(function (response) {
-          console.log(response);
 
+         console.log(queryLocationUrl);
+         console.log(response);
 
       })
+// put geolocation function
 })
 
 
