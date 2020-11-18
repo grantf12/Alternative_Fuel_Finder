@@ -22,7 +22,8 @@
                 </span><span> Fuel Finder</a></span>
     </nav>
     <!-- Header -->
-    <div class="container m-3">
+    <div class="container mt-4">
+
         <h1 class="title has-text-centered">
             Find fueling stations near you!
         </h1>
@@ -31,6 +32,7 @@
         </p>
     </div>
     <!-- Gas or Electric -->
+
     <div class="container m-3 mt-5 has-text-centered">
         <div class="row m-5 has-text-centered">
             <div class="select is-rounded is-dark is-large" id="select-vehicle-type">
@@ -42,7 +44,9 @@
             </div>
         </div>
         <!-- Radius Select -->
+
         <div class="row m-5 has-text-centered">
+
             <div class="select is-rounded is-dark is-large" id="select-radius">
                 <select>
                     <option>Select search radius</option>
@@ -55,6 +59,7 @@
         </div>
         <!-- Brand Select-->
         <div class="row m-5 has-text-centered">
+
             <div class="select is-rounded is-dark is-large" id="select-brand">
                 <select>
                     <option>Select Gas Station Brand (Optional)</option>
@@ -73,6 +78,7 @@
             </div>
         </div>
     </div>
+
     <!-- Gas Container -->
     <div class="container m-3 mt-5 has-text-centered is-hidden" id="gas-container">
         <!-- Gas Fuel Type Select -->
@@ -93,7 +99,9 @@
         </div>
         <div class="container columns m-5 is-centered">
             <div class="control has-icons-left">
+
                 <input class="input is-large column" type="text" placeholder="Current Location" id="address">
+
                 <span class="icon is-medium is-left">
                     <i class="fas fa-location-arrow"></i>
                 </span>
@@ -118,7 +126,7 @@
             <input class="button is-large is-rounded" type="submit" value="Start Your Search" id="submit-button">
         </div>
     </div>
-    </div>
+
     <!--Modal for search results-->
     <div class="modal" id="results">
         <div class="modal-background"></div>
@@ -151,11 +159,8 @@
             </div>
         </div>
     </div>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="script.js"></script>
-
-
 </body>
 
 </html>
