@@ -1,5 +1,35 @@
-//Global Vars
 
+let apiKey ='3037486a16mshc6512bad445d222p100853jsnc25d6486900b'
+let appID = 'wu2NZ7wMWa5kcBJ2Okrx'
+let fuelAppApiKey = 'rBMnSNgmY86eyVSBI1tFCJ7G6J5rC3OcsyPwL7xOvIw'
+var fuelOutPut = $('#example').val()
+let userPosition = $("#result").val() 
+
+
+//========================================================================
+// Geo Location functions
+//=======================================================
+if("geolocation" in navigator){
+    navigator.geolocation.getCurrentPosition(function(position){
+        console.log("Lat:" +position.coords.latitude+ "Lang :" + position.coords.longitude);
+    });
+}else{
+    console.log('ERROR 404')
+}
+//
+//$("#sumbit-type").click(function () { //user clicks button
+//	if ("geolocation" in navigator){ //check geolocation available 
+//		//try to get user current location using getCurrentPosition() method
+//		navigator.geolocation.getCurrentPosition(function(position){ 
+//                $("#result").html("Found your location <br />Lat : "+position.coords.latitude+" </br>Lang :"+ position.//coords.longitude);
+//			});
+//	}else{
+//		console.log("Browser doesn't support geolocation!");
+//	}
+//});
+//=======================================================
+//Global Vars
+//=======================================================
 //Json web token credentials
 let JSONwebToken = '0LUvCafeaQ4taVT6uNYleX6pNyF37UpsNJWgDabOXfUjUWcoXJ9m48ZT8M5ZWTMDSHcmFWmwjfHvuB7kBXSatw'
 let accessKeyId = 'JPP0pPukzSdRomRRqvuxgg'
@@ -18,7 +48,7 @@ var userpostion = getLocation();
 
 //========================================================================
 // Geo Location functions
-
+//=======================================================
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -47,6 +77,26 @@ $("#select-vehicle-type").on("change", function () {
 $("#submit-type").click(function (event) {
     event.preventDefault();
 
+    $.ajax({
+        url: queryLocationUrl,
+        method: "GET"
+      }).then(function (response) {
+
+         console.log(queryLocationUrl);
+         console.log(response);
+
+      })
+// put geolocation function
+})
+
+$("#submit-button").on("click", function(){
+    $("#results").attr("class", "modal is-active");
+})
+
+$("#close-modal").on("click", function(){
+    $("#results").attr("class", "modal");
+})
+
 findStations();
 
 })
@@ -67,3 +117,4 @@ function findStations(position) {
 
     })
 }
+
