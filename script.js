@@ -1,14 +1,14 @@
 //Global Vars
 
 //Json web token credentials
-let JSONwebToken ='0LUvCafeaQ4taVT6uNYleX6pNyF37UpsNJWgDabOXfUjUWcoXJ9m48ZT8M5ZWTMDSHcmFWmwjfHvuB7kBXSatw'
+let JSONwebToken = '0LUvCafeaQ4taVT6uNYleX6pNyF37UpsNJWgDabOXfUjUWcoXJ9m48ZT8M5ZWTMDSHcmFWmwjfHvuB7kBXSatw'
 let accessKeyId = 'JPP0pPukzSdRomRRqvuxgg'
 // Rest Api credentails
 let restAppId = "sQCEUM1tDeCqiMmQGE2X"
 let restApiKey = "Sk529ATwSKfY2Ms96plU1rkpHasGvgXHnjMUlEzu0HY"
 //Javascript Here credentails
 let jsAppId = "ZDmjBoiHdg5JILLoGycJ"
-let jsApiKey = "7esiAVsnoUKENkEqzzIAuEcxHBXcukTotE3H66oap5g"
+let jsApiKey = "Q13x91mhppBgmOOFhI0rpSjimt9kHezCQclpMEpKtbE"
 
 
 // Geo location variables
@@ -21,18 +21,18 @@ var userpostion = getLocation();
 
 
 function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else { 
-     console.log("Geolocation is not supported by this browser.");
-  }
-}
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+    }
+};
 
 function showPosition(position) {
-  console.log(position.coords.latitude + "" + position.coords.longitude);
+    console.log(position.coords.latitude + "" + position.coords.longitude);
 }
 
-$("#select-vehicle-type").on("change", function(){
+$("#select-vehicle-type").on("change", function () {
     if ($("#select-vehicle-type :selected").val() === "gas") {
         $("#gas-container").attr("class", "container m-3 mt-5 has-text-centered");
     } else {
@@ -44,22 +44,26 @@ $("#select-vehicle-type").on("change", function(){
 //Section of code below is for the user input to be displayed on the dashboard listed
 //=======================================================
 //the submit button
-$("#submit-type").click(function(event){
+$("#submit-type").click(function (event) {
     event.preventDefault();
-    
-    const queryLocationUrl = "https://fuel-v2.cc.api.here.com/xsd/ACS-Fuel-201402.xsd?" + appID + appCode;
 
-    $.ajax({
-        url: queryLocationUrl,
-        method: "GET"
-      }).then(function (response) {
-         console.log(queryLocationUrl);
-         console.log(response);
-
-      })
-// put geolocation function
-
+findStations();
 
 })
 
+function findStations(position) {
+    //var lon = position.coords.longitude;
+    //var lat = position.coords.latitude;
 
+    const queryLocationUrl = "https://fuel-v2.cc.api.here.com/fuel/stations.json?app_id=" + restAppId + "&app_code=" + restApiKey;// +// "&prox";
+
+    $.ajax({
+        url: queryLocationUrl,
+        method: "GET",
+        dataType:"jsonp"
+    }).then(function (response) {
+        console.log(queryLocationUrl);
+        console.log(response);
+
+    })
+}
