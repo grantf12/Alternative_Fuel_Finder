@@ -9,7 +9,8 @@ let restApiKey = "Sk529ATwSKfY2Ms96plU1rkpHasGvgXHnjMUlEzu0HY"
 //Javascript Here credentails
 let jsAppId = "ZDmjBoiHdg5JILLoGycJ"
 let jsApiKey = "Q13x91mhppBgmOOFhI0rpSjimt9kHezCQclpMEpKtbE"
-
+var latitude;
+var longitude;
 
 // Geo location variables
 // to retrieve current user postion
@@ -29,6 +30,10 @@ function getLocation() {
 };
 
 function showPosition(position) {
+    latitude = position.coords.latitude;
+    longitude = position.coords.longitude;
+    console.log(latitude);
+    console.log(longitude);
     console.log(position.coords.latitude + "" + position.coords.longitude);
 }
 
@@ -47,6 +52,7 @@ $("#select-vehicle-type").on("change", function () {
 //open modal
 $("#submit-button").on("click", function(){
     $("#results").attr("class", "modal is-active");
+    electricInfo();
 })
 
 //close modal
@@ -71,5 +77,19 @@ function findStations(position) {
         console.log(queryLocationUrl);
         console.log(response);
 
+    })
+}
+
+function electricInfo() {
+    var electricAPIKey= "Th9TbtOCXmrJhKEo2F7cW2Srorv25I70XaPcviiw";
+    var electricLocation = $("#address").val().trim();
+    var radius= $("#select-radius :selected").val();
+    var electricQueryURL= "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&latitude=" + latitude + "&longitude=" + longitude + "&radius=" + radius+ "&fuel_type=ELEC&limit=1";
+    console.log(electricQueryURL);
+    $.ajax({
+        url: electricQueryURL,
+        method: "GET"
+    }).then(function(electricResponse) {
+        console.log(electricResponse)
     })
 }
