@@ -33,35 +33,13 @@ if("geolocation" in navigator){
 }else{
     console.log('ERROR 404')
 }
-//
-//$("#sumbit-type").click(function () { //user clicks button
-//	if ("geolocation" in navigator){ //check geolocation available 
-//		//try to get user current location using getCurrentPosition() method
-//		navigator.geolocation.getCurrentPosition(function(position){ 
-//                $("#result").html("Found your location <br />Lat : "+position.coords.latitude+" </br>Lang :"+ position.//coords.longitude);
-//			});
-//	}else{
-//		console.log("Browser doesn't support geolocation!");
-//	}
-//});
+
 //=======================================================
 //Global Vars
 //=======================================================
 //Json web token credentials
-let JSONwebToken = '0LUvCafeaQ4taVT6uNYleX6pNyF37UpsNJWgDabOXfUjUWcoXJ9m48ZT8M5ZWTMDSHcmFWmwjfHvuB7kBXSatw'
-let accessKeyId = 'JPP0pPukzSdRomRRqvuxgg'
-// Rest Api credentails
-let restAppId = "sQCEUM1tDeCqiMmQGE2X"
-let restApiKey = "Sk529ATwSKfY2Ms96plU1rkpHasGvgXHnjMUlEzu0HY"
-//Javascript Here credentails
-let jsAppId = "ZDmjBoiHdg5JILLoGycJ"
-let jsApiKey = "Q13x91mhppBgmOOFhI0rpSjimt9kHezCQclpMEpKtbE"
-
-
 // Geo location variables
 // to retrieve current user postion
-
-var userpostion = getLocation();
 
 //========================================================================
 // Geo Location functions
@@ -86,7 +64,9 @@ function showPosition(position) {
 $("#select-vehicle-type").on("change", function () {
     if ($("#select-vehicle-type :selected").val() === "gas") {
         $("#gas-container").attr("class", "container m-3 mt-5 has-text-centered");
-    } else {
+    }else if($("#select-vehicle-type :selected").val() === "electric") {
+        $('#evConnector-container').attr("class","container mt-5 has-text-centered");
+        $('#evChargerType-container').attr("class","container mt-5 has-text-centered");
         $("#gas-container").attr("class", "container m-3 mt-5 has-text-centered is-hidden");
     }
 })
@@ -114,15 +94,13 @@ function findStations(position) {
     //var lon = position.coords.longitude;
     //var lat = position.coords.latitude;
 
-    const queryLocationUrl = "https://fuel-v2.cc.api.here.com/fuel/stations.json?app_id=" + restAppId + "&app_code=" + restApiKey;// +// "&prox";
+    const queryLocationUrl = "";
 
     $.ajax({
         url: queryLocationUrl,
         method: "GET",
-        dataType:"jsonp"
     }).then(function (response) {
-        console.log(queryLocationUrl);
-        console.log(response);
+
     })
 }
 
