@@ -100,7 +100,7 @@ function findStations(position) {
         url: queryLocationUrl,
         method: "GET",
     }).then(function (response) {
-        
+
     })
 }
 
@@ -112,9 +112,8 @@ function electricInfo() {
     console.log(electricQueryURL);
     $.ajax({
         url: electricQueryURL,
-        method: "GET",
-        dataType: "jsonp"
+        method: "GET"
     }).then(function(electricResponse) {
-        console.log(electricQueryURL)
+        console.log(electricResponse)
     })
 }

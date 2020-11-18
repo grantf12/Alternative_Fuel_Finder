@@ -23,6 +23,7 @@
     </nav>
     <!-- Header -->
     <div class="container mt-4">
+
         <h1 class="title has-text-centered">
             Find fueling stations near you!
         </h1>
@@ -31,8 +32,9 @@
         </p>
     </div>
     <!-- Gas or Electric -->
-    <div class="container mt-5 has-text-centered">
-        <div class="row mt-5">
+
+    <div class="container m-3 mt-5 has-text-centered">
+        <div class="row m-5 has-text-centered">
             <div class="select is-rounded is-dark is-large" id="select-vehicle-type">
                 <select>
                     <option>Select type of vehicle</option>
@@ -42,7 +44,9 @@
             </div>
         </div>
         <!-- Radius Select -->
-        <div class="row mt-5">
+
+        <div class="row m-5 has-text-centered">
+
             <div class="select is-rounded is-dark is-large" id="select-radius">
                 <select>
                     <option>Select search radius</option>
@@ -54,7 +58,8 @@
             </div>
         </div>
         <!-- Brand Select-->
-        <div class="row mt-5">
+        <div class="row m-5 has-text-centered">
+
             <div class="select is-rounded is-dark is-large" id="select-brand">
                 <select>
                     <option>Select Gas Station Brand (Optional)</option>
@@ -73,8 +78,10 @@
             </div>
         </div>
     </div>
-    <!-- Fuel Type -->
-    <div class="container mt-5 has-text-centered is-hidden" id="gas-container">
+
+    <!-- Gas Container -->
+    <div class="container m-3 mt-5 has-text-centered is-hidden" id="gas-container">
+        <!-- Gas Fuel Type Select -->
         <div class="select is-rounded is-dark is-large" id="select-fuel-type">
             <select>
                 <option>Select fuel type</option>
@@ -117,7 +124,9 @@
         </div>
         <div class="container columns m-5 is-centered">
             <div class="control has-icons-left">
-                <input class="input is-large column" type="text" placeholder="Current Location">
+
+                <input class="input is-large column" type="text" placeholder="Current Location" id="address">
+
                 <span class="icon is-medium is-left">
                     <i class="fas fa-location-arrow"></i>
                 </span>
@@ -138,8 +147,9 @@
     </div>
     <!-- Submit Button-->
     <div class="row m-5 has-text-centered">
-        <input class="button is-large is-rounded" type="submit" value="Start Your Search" id="submit-button">
-    </div>
+        <div class="container m-3 mt-5 has-text-centered" id="submit-container">
+            <input class="button is-large is-rounded" type="submit" value="Start Your Search" id="submit-button">
+        </div>
     </div>
 
     <!--Modal for search results-->
@@ -173,12 +183,6 @@
                 </section>
             </div>
         </div>
-    </div>    
-    </section>
-
-    </div>
-    </div>
-    </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="script.js"></script>
