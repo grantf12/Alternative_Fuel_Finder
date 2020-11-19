@@ -1,21 +1,6 @@
 //Global Vars
-let apiKey ='3037486a16mshc6512bad445d222p100853jsnc25d6486900b'
-let appID = 'wu2NZ7wMWa5kcBJ2Okrx'
-let fuelAppApiKey = 'rBMnSNgmY86eyVSBI1tFCJ7G6J5rC3OcsyPwL7xOvIw'
-var fuelOutPut = $('#example').val()
-let userPosition = $("#result").val() 
 
-//Json web token credentials
-let JSONwebToken = '0LUvCafeaQ4taVT6uNYleX6pNyF37UpsNJWgDabOXfUjUWcoXJ9m48ZT8M5ZWTMDSHcmFWmwjfHvuB7kBXSatw'
-let accessKeyId = 'JPP0pPukzSdRomRRqvuxgg'
-// Rest Api credentails
-let restAppId = "sQCEUM1tDeCqiMmQGE2X"
-let restApiKey = "Sk529ATwSKfY2Ms96plU1rkpHasGvgXHnjMUlEzu0HY"
-//Javascript Here credentails
-let jsAppId = "ZDmjBoiHdg5JILLoGycJ"
-let jsApiKey = "Q13x91mhppBgmOOFhI0rpSjimt9kHezCQclpMEpKtbE"
-var latitude;
-var longitude;
+let userPosition = $("#result").val() 
 
 
 // Geo location variables
@@ -61,11 +46,13 @@ function showPosition(position) {
     console.log(latitude);
     console.log(longitude);
     console.log(position.coords.latitude + "" + position.coords.longitude);
+    trafficInfo(position.coords);
 }
 
 $("#select-vehicle-type").on("change", function () {
     if ($("#select-vehicle-type :selected").val() === "gas") {
-        $("#gas-container").attr("class", "container mt-5 has-text-centered");
+        $("#gas-container").attr("class", "container mt-5 has-text-centered"); $('#evConnector-container').attr("class","container mt-5 is-hidden has-text-centered");
+        $('#evChargerType-container').attr("class","container mt-5 is-hidden has-text-centered");
     }else if($("#select-vehicle-type :selected").val() === "electric") {
         $('#evConnector-container').attr("class","container mt-5 has-text-centered");
         $('#evChargerType-container').attr("class","container mt-5 has-text-centered");
@@ -80,6 +67,7 @@ $("#select-vehicle-type").on("change", function () {
 
 //open modal
 $("#submit-button").on("click", function(){
+    event.preventDefault();
     var radius= $("#select-radius :selected").val();
     if (radius === "Select search radius") {
         $("#select-radius").attr("class", "select is-rounded is-danger is-large is-focused");
@@ -97,19 +85,36 @@ $("#close-modal").on("click", function(){
 })
 
 
-findStations();
 
-function findStations(position) {
-    //var lon = position.coords.longitude;
-    //var lat = position.coords.latitude;
+//==============================================
+// Bounding box instructor helped "Anthony"
 
-    const queryLocationUrl = "";
+function generateBoundingBox(lat, lng, radius) {
+    console.log(lat,lng)
+    lat = parseFloat(lat);
+    lng = parseFloat(lng);
+    radius = parseInt(radius);
+    var fixed = function(value) {
+      return value.toFixed(6);
+    };
+    console.log(lat,lng)
+    var latToMiles = (1/69) * radius;
+    var lngToMiles = (1/54) * radius;
+    var leftTop = [fixed(lat - latToMiles), fixed(lng - lngToMiles)];
+    var rightBottom = [fixed(lat + latToMiles), fixed(lng + lngToMiles)];
+    return leftTop.concat(rightBottom).join();
+  }
+
+
+function trafficInfo(pos) {
+  
+    const queryLocationUrl = "http://www.mapquestapi.com/traffic/v2/incidents?key=ANyNQWQRMCwYtIcEivl0YidZMG4FgAJc&boundingBox=" + generateBoundingBox(pos.latitude,pos.longitude, 25) + "&filters=construction,incidents,events,congestion";
 
     $.ajax({
         url: queryLocationUrl,
         method: "GET",
     }).then(function (response) {
-
+        console.log(response)
     })
 }
 
@@ -128,7 +133,9 @@ function electricInfo() {
         url: electricQueryURL,
         method: "GET"
     }).then(function(electricResponse) {
-        console.log(electricResponse)
+        console.log(electricResponse.longitude)
+        console.log(electricResponse.latitude)
+        trafficInfo(electricResponse, radius)
         for (i=0; i < electricResponse.fuel_stations.length; i++){
             
             // Variables that are being pulled
