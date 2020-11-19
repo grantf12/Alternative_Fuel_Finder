@@ -57,7 +57,7 @@
             </div>
         </div>
         <!-- Brand Select-->
-        <div class="row mt-5 has-text-centered">
+        <!-- <div class="row mt-5 has-text-centered">
 
             <div class="select is-rounded is-dark is-large" id="select-brand">
                 <select>
@@ -76,43 +76,46 @@
                 </select>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Gas Container -->
     <div class="container mt-5 has-text-centered is-hidden" id="gas-container">
         <!-- Gas Fuel Type Select -->
         <div class="select is-rounded is-dark is-large" id="select-fuel-type">
             <select>
-                <option>Select fuel type</option>
-                <option>Regular</option>
-                <option>Premium</option>
-                <option>Ultra</option>
-                <option>Diesel</option>
+                <option value="BD,CNG,E85,HY,LNG,LPG" >Select fuel type</option>
+                <option value="BD,CNG,E85,HY,LNG,LPG" >All</option>
+                <option value="BD" >Biodiesel</option>
+                <option value="CNG" >Compressed Natural Gas</option>
+                <option value="E85" >Ethanol</option>
+                <option value="HY" >Hydeogen</option>
+                <option value="LNG" >Liquified Natural Gas</option>
+                <option value="LPG" >Propane</option>
             </select>
         </div>
     </div>
-    <!-- EV connector and charge lvl-->
-    <div class="container mt-5 has-text-centered is-hidden" id="evConnector-container">
+      <!-- EV connector and charge lvl-->
+      <div class="container mt-5 has-text-centered is-hidden" id="evConnector-container">
         <div class="select is-rounded is-dark is-large" id="select-connector-type">
             <select>
                 <option>Select Connector Type</option>
-                <option value="All_Connector">All</option>
+                <option value="all">All</option>
                 <option value="J1772">J1772</option>
                 <option value="CCS">CCS</option>
-                <option value="CHAdeMO">CHAdeMO</option>
-                <option value="Tesla">Tesla</option>
+                <option value="CHADEMO">CHAdeMO</option>
+                <option value="TESLA">Tesla</option>
             </select>
         </div>
     </div>
-    <div class="container mt-5 has-text-centered is-hidden" id="evChargerType-container">
-        <div class="select is-rounded is-dark is-large" id="select-ChargerType-type">
+    <div class="container mt-5 has-text-centered is-hidden" id="ev-level-container">
+        <div class="select is-rounded is-dark is-large" id="select-charger-level">
             <select>
-                <option>Select Charger Type</option>
-                <option value="All_Charger">All</option>
-                <option value="Level_1">Level 1</option>
-                <option value="Level_2">Level 2</option>
-                <option value="Level_3">Level 3</option>
-                <option value="DC_Fast">DC Fast</option>
+                <option>Select Charging Level</option>
+                <option value="all">All</option>
+                <option value="1">Level 1</option>
+                <option value="2">Level 2</option>
+                <option value="3">Level 3</option>
+                <option value="dc_fast">DC Fast</option>
             </select>
         </div>
     </div>
@@ -121,13 +124,14 @@
         <div class="row">
             <label class="label is-size-4">Address (or use Current Location): </label>
         </div>
-        <div class="container mt-5 columns is-centered">
-            <div class="control has-icons-left">
+        <div class="container mt-5 is-centered">
+            <div class="row columns is-centered is-vcentered">
+            <div class="control">
 
                 <input class="input is-large column" type="text" placeholder="Current Location" id="address">
-
-                <span class="icon is-medium is-left">
-                    <i class="fas fa-location-arrow"></i>
+            </div>
+                <span class="icon button is-large" id = "current-location">
+                    <i class="fas fa-location-arrow is-vcentered"></i>
                 </span>
             </div>
         </div>
