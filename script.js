@@ -21,19 +21,16 @@ var longitude;
 // Geo location variables
 // to retrieve current user postion
 
-var userpostion = getLocation();
-
-//========================================================================
+// var userpostion = getLocation();
+// //========================================================================
 // Geo Location functions
 //=======================================================
-if("geolocation" in navigator){
+function geolocation(position) {
     navigator.geolocation.getCurrentPosition(function(position){
-        console.log("Lat:" +position.coords.latitude+ "Lang :" + position.coords.longitude);
-    });
-}else{
-    console.log('ERROR 404')
-}
-
+    console.log("Lat:" +position.coords.latitude+ "Lang :" + position.coords.longitude);
+    latitude = position.coords.latitude;
+    longitude = position.coords.longitude;
+})}
 
 //=======================================================
 //Global Vars
@@ -48,13 +45,11 @@ if("geolocation" in navigator){
 //=======================================================
 
 function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-        console.log("Geolocation is not supported by this browser.");
+    return new Promise(function (resolve, reject) {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
     }
-};
-
+  
 function showPosition(position) {
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
@@ -91,27 +86,21 @@ $("#submit-button").on("click", function(){
     electricInfo();
 })
 
+$("#current-location").on("click", function(){
+    getLocation()
+    .then((position) => {
+        console.log(position);
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+        console.log(latitude);
+        console.log(longitude);
+        $("#address").attr("placeholder", latitude + ", " + longitude);
+      })
+})
 //close modal
 $("#close-modal").on("click", function(){
     $("#results").attr("class", "modal");
 })
-
-
-findStations();
-
-function findStations(position) {
-    //var lon = position.coords.longitude;
-    //var lat = position.coords.latitude;
-
-    const queryLocationUrl = "";
-
-    $.ajax({
-        url: queryLocationUrl,
-        method: "GET",
-    }).then(function (response) {
-
-    })
-}
 
 function electricInfo() {
     var electricAPIKey= "Th9TbtOCXmrJhKEo2F7cW2Srorv25I70XaPcviiw";
@@ -122,7 +111,7 @@ function electricInfo() {
         console.log(electricLocation);
     var electricQueryURL= "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&location=" + electricLocation +  "&radius=" + radius+ "&fuel_type=ELEC&limit=10";
     } else {
-        var electricQueryURL= "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&latitude=" + latitude + "&longitude=" + longitude + "&radius=" + radius+ "&fuel_type=ELEC&limit=10";
+        electricQueryURL= "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&latitude=" + latitude + "&longitude=" + longitude + "&radius=" + radius+ "&fuel_type=ELEC&limit=10";
     }
     $.ajax({
         url: electricQueryURL,
@@ -175,4 +164,17 @@ function electricInfo() {
         }
     }
     )
+}
+
+function pricingInfo() {
+    var priceKey = "aa1808bfbb75b3b9fd0c5c067a1a5a4ff640f7a7b83208ea8d7180893301";
+    var priceURL = "https://ethgasstation.info/api/ethgasAPI.json?api-key=" + priceKey;
+
+    $.ajax({
+        url: priceURL,
+        method: "GET"
+    }).then(function(priceResponse) {
+        console.log(priceResponse);
+    })
+
 }
