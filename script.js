@@ -1,19 +1,16 @@
 var latitude;
 var longitude;
 var locations = [];
-document.cookie = 'cookie2=value2; SameSite=None; Secure';
+// document.cookie = 'cookie2=value2; SameSite=None; Secure';
 
-function pass() {
-    console.log(1);
-}
 //========================================================================
 // Geo Location functions
 //=======================================================
 
 function initMap() {
-    var searchLoc = { lat: -latitude, lng: longitude };
+    var searchLoc = { lat: latitude, lng: longitude };
     var map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 3,
+        zoom: 14,
         center: searchLoc,
     });
     for (var m = 0; m < locations.length; m++)
@@ -23,21 +20,36 @@ function initMap() {
         });
 }
 
-
 function getLocation() {
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+    }
+};
+
+function showPosition(position) {
+    latitude = position.coords.latitude;
+    longitude = position.coords.longitude;
+    console.log(latitude);
+    console.log(longitude);
+    console.log(position.coords.latitude + "" + position.coords.longitude);
+    trafficInfo(position.coords);
+   };
+
+
+function findMe() {
     return new Promise(function (resolve, reject) {
         navigator.geolocation.getCurrentPosition(resolve, reject);
     });
 }
 
 function saveCoords() {
-    getLocation()
+    findMe()
         .then((position) => {
-            console.log(position);
             latitude = position.coords.latitude;
             longitude = position.coords.longitude;
-            console.log(latitude);
-            console.log(longitude);
         })
 }
 
@@ -58,6 +70,18 @@ $("#select-vehicle-type").on("change", function () {
 //=======================================================
 //the submit button
 
+function checkLocation() {
+    if ($("#address").val() !== "") {
+        return;
+    } else {
+        $("#address").attr("class", "input is-large column is-danger");
+        $("#address").append('<span class="icon is-small is-left"><i class="fas fa-exclamation-triangle"></i> </span>');
+        $("#address-container").attr("class", "control mt-5 has-text-centered has-icons-left");
+    }
+}
+
+
+
 //open modal
 $("#submit-button").on("click", function () {
     var radius = $("#select-radius :selected").val();
@@ -67,25 +91,29 @@ $("#submit-button").on("click", function () {
         $("#radius-container").attr("class", "control mt-5 has-text-centered has-icons-left");
         return;
     }
-    $("#results").attr("class", "modal is-active");
-    var vehicleType = $('#select-vehicle-type :selected').val()
-    if (vehicleType === "gas") {
-        fuelInfo()
+    if ($("#address").val() !== "") {
+        $("#results").attr("class", "modal is-active");
+        var vehicleType = $('#select-vehicle-type :selected').val()
+        if (vehicleType === "gas") {
+            fuelInfo()
+        }
+        else {
+            electricInfo();
+        }
+    } else {
+        $("#address").attr("class", "input is-medium column is-danger");
+        $("#current-location").attr("class", "icon button is-danger is-large")
+        return;
     }
-    else {
-        electricInfo();
-    }
+   
 })
 
 $("#current-location").on("click", function () {
-    getLocation()
+    findMe()
         .then((position) => {
-            console.log(position);
             latitude = position.coords.latitude;
             longitude = position.coords.longitude;
-            console.log(latitude);
-            console.log(longitude);
-            $("#address").attr("placeholder", latitude + ", " + longitude);
+            $("#address").attr("value", latitude + ", " + longitude);
         })
 })
 //close modal
@@ -93,26 +121,44 @@ $("#close-modal").on("click", function () {
     $("#results").attr("class", "modal");
 })
 
-function selectEVType() {
-    if ($("#select-connector-type :selected").val() === "Select Connector Type") {
-        evType = "all";
-    }
-    evType = $("#select-connector-type :selected").val();
-}
+//==============================================
+// Bounding box instructor helped "Anthony"
 
-function selectEVLevel() {
-    if ($("#select-charger-level :selected").val() === "Select Charger Type") {
-        evLevel = "all";
-    }
-    evLevel = $("#select-charger-level :selected").val();
-}
+// function generateBoundingBox(lat, lng, radius) {
+//     console.log(lat,lng)
+//     lat = parseFloat(lat);
+//     lng = parseFloat(lng);
+//     radius = parseInt(radius);
+//     var fixed = function(value) {
+//       return value.toFixed(6);
+//     };
+//     console.log(lat,lng)
+//     var latToMiles = (1/69) * radius;
+//     var lngToMiles = (1/54) * radius;
+//     var leftTop = [fixed(lat - latToMiles), fixed(lng - lngToMiles)];
+//     var rightBottom = [fixed(lat + latToMiles), fixed(lng + lngToMiles)];
+//     return leftTop.concat(rightBottom).join();
+//   }
+
+
+// function trafficInfo(pos) {
+  
+//     const queryLocationUrl = "http://www.mapquestapi.com/traffic/v2/incidents?key=ANyNQWQRMCwYtIcEivl0YidZMG4FgAJc&boundingBox=" + generateBoundingBox(pos.latitude,pos.longitude, 25) + "&filters=construction,incidents,events,congestion";
+
+//     $.ajax({
+//         url: queryLocationUrl,
+//         method: "GET",
+//     }).then(function (response) {
+//         console.log(response)
+//     })
+// }
 
 function electricInfo() {
     var electricAPIKey = "Th9TbtOCXmrJhKEo2F7cW2Srorv25I70XaPcviiw";
     var electricLocation = encodeURI($("#address").val());
     var radius = $("#select-radius :selected").val();
-    selectEVType();
-    selectEVLevel();
+    var evType = $("#select-connector-type :selected").val()
+    var evLevel= $("#select-charger-level :selected").val();
     if (electricLocation !== "") {
         console.log(electricLocation);
         electricQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&location=" + electricLocation + "&radius=" + radius + "&ev_connector_type=" + evType + "&ev_charging_level=" + evLevel + "&fuel_type=ELEC&limit=10";
@@ -139,7 +185,7 @@ function electricInfo() {
             optionLong = (fuelStation.longitude);
 
             locations.push({ lat: optionLat, lng: optionLong })
-
+                
             // Variables that need to be made and appended
             var container1 = $('<div class="container p-3 mt-1"></div>')
             var row = $('<div class="row"></div>')
@@ -167,10 +213,10 @@ function electricInfo() {
             $(col3).append(EV, EV2, row2);
             $(row2).append(distanceTitle, distanceAmount)
             $(split).append(container1);
-            $('#modal-card').append(split);
-
+            $('#modal-card').append(split); 
+            
         }
-        console.log(locations);
+
         var googleMap = $('<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDDdLFBl_Wnn1TbZojvb4jZTH3rgDDWh8&callback=initMap&libraries=&v=weekly" defer>');
         $("#modal-card").append(googleMap);
     }
@@ -206,6 +252,10 @@ function fuelInfo() {
             console.log(stationName)
             console.log(stationAddress)
             console.log(howFar)
+            optionLat = (fuelStation.latitude);
+            optionLong = (fuelStation.longitude);
+
+            locations.push({ lat: optionLat, lng: optionLong })
 
 
             // Variables that need to be made and appended
@@ -238,5 +288,7 @@ function fuelInfo() {
             $('#modal-card').append(split);
 
         }
+        var googleMap = $('<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDDdLFBl_Wnn1TbZojvb4jZTH3rgDDWh8&callback=initMap&libraries=&v=weekly" defer>');
+        $("#modal-card").append(googleMap);
     })
 }
