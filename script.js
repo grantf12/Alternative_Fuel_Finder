@@ -120,7 +120,6 @@ $("#close-modal").on("click", function () {
     $("#results").attr("class", "modal");
     $("#list").html("");
     $("#map").html("");
-    
 })
 
 function storeSettings() {
@@ -235,6 +234,7 @@ function electricInfo() {
             $(row2).append(distanceTitle, distanceAmount)
             $(split).append(container1);
             $('#list').append(split);  
+
             
         }
 
