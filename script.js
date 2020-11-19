@@ -1,42 +1,41 @@
 //Global Vars
-let apiKey = '3037486a16mshc6512bad445d222p100853jsnc25d6486900b'
-let appID = 'wu2NZ7wMWa5kcBJ2Okrx'
-let fuelAppApiKey = 'rBMnSNgmY86eyVSBI1tFCJ7G6J5rC3OcsyPwL7xOvIw'
-var fuelOutPut = $('#example').val()
-let userPosition = $("#result").val()
-
-//Json web token credentials
-let JSONwebToken = '0LUvCafeaQ4taVT6uNYleX6pNyF37UpsNJWgDabOXfUjUWcoXJ9m48ZT8M5ZWTMDSHcmFWmwjfHvuB7kBXSatw'
-let accessKeyId = 'JPP0pPukzSdRomRRqvuxgg'
-// Rest Api credentails
-let restAppId = "sQCEUM1tDeCqiMmQGE2X"
-let restApiKey = "Sk529ATwSKfY2Ms96plU1rkpHasGvgXHnjMUlEzu0HY"
-//Javascript Here credentails
-let jsAppId = "ZDmjBoiHdg5JILLoGycJ"
-let jsApiKey = "Q13x91mhppBgmOOFhI0rpSjimt9kHezCQclpMEpKtbE"
-var latitude;
-var longitude;
-
-
-// Geo location variables
-// to retrieve current user postion
-
 //========================================================================
 // Geo Location functions
 //=======================================================
 
 function getLocation() {
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+    }
+};
+
+function showPosition(position) {
+    latitude = position.coords.latitude;
+    longitude = position.coords.longitude;
+    console.log(latitude);
+    console.log(longitude);
+    console.log(position.coords.latitude + "" + position.coords.longitude);
+    trafficInfo(position.coords);
+   });
+
+  function FindMe() {
     return new Promise(function (resolve, reject) {
         navigator.geolocation.getCurrentPosition(resolve, reject);
-    });
-}
+    }};
 
 $("#select-vehicle-type").on("change", function () {
     if ($("#select-vehicle-type :selected").val() === "gas") {
-        $("#gas-container").attr("class", "container mt-5 has-text-centered");
-    } else if ($("#select-vehicle-type :selected").val() === "electric") {
-        $('#evConnector-container').attr("class", "container mt-5 has-text-centered");
-        $('#evChargerType-container').attr("class", "container mt-5 has-text-centered");
+
+        $("#gas-container").attr("class", "container mt-5 has-text-centered"); 
+        $('#evConnector-container').attr("class","container mt-5 is-hidden has-text-centered");
+        $('#evChargerType-container').attr("class","container mt-5 is-hidden has-text-centered");
+    }else if($("#select-vehicle-type :selected").val() === "electric") {
+        $('#evConnector-container').attr("class","container mt-5 has-text-centered");
+        $('#evChargerType-container').attr("class","container mt-5 has-text-centered");
+
         $("#gas-container").attr("class", "container mt-5 has-text-centered is-hidden");
     }
 })
@@ -47,8 +46,10 @@ $("#select-vehicle-type").on("change", function () {
 //the submit button
 
 //open modal
+
 $("#submit-button").on("click", function () {
     var radius = $("#select-radius :selected").val();
+
     if (radius === "Select search radius") {
         $("#select-radius").attr("class", "select is-rounded is-danger is-large is-focused");
         $("#select-radius").append('<span class="icon is-small is-left"><i class="fas fa-exclamation-triangle"></i> </span>');
@@ -66,7 +67,7 @@ $("#submit-button").on("click", function () {
 })
 
 $("#current-location").on("click", function () {
-    getLocation()
+    FindMe()
         .then((position) => {
             console.log(position);
             latitude = position.coords.latitude;
@@ -80,7 +81,39 @@ $("#current-location").on("click", function () {
 $("#close-modal").on("click", function () {
     $("#results").attr("class", "modal");
 })
+    
+    
+//==============================================
+// Bounding box instructor helped "Anthony"
 
+function generateBoundingBox(lat, lng, radius) {
+    console.log(lat,lng)
+    lat = parseFloat(lat);
+    lng = parseFloat(lng);
+    radius = parseInt(radius);
+    var fixed = function(value) {
+      return value.toFixed(6);
+    };
+    console.log(lat,lng)
+    var latToMiles = (1/69) * radius;
+    var lngToMiles = (1/54) * radius;
+    var leftTop = [fixed(lat - latToMiles), fixed(lng - lngToMiles)];
+    var rightBottom = [fixed(lat + latToMiles), fixed(lng + lngToMiles)];
+    return leftTop.concat(rightBottom).join();
+  }
+
+
+function trafficInfo(pos) {
+  
+    const queryLocationUrl = "http://www.mapquestapi.com/traffic/v2/incidents?key=ANyNQWQRMCwYtIcEivl0YidZMG4FgAJc&boundingBox=" + generateBoundingBox(pos.latitude,pos.longitude, 25) + "&filters=construction,incidents,events,congestion";
+
+    $.ajax({
+        url: queryLocationUrl,
+        method: "GET",
+    }).then(function (response) {
+        console.log(response)
+    })
+  
 function selectEVType() {
     if ($("#select-connector-type :selected").val() === "Select Connector Type") {
         evType = "all";
@@ -103,19 +136,21 @@ function electricInfo() {
         selectEVLevel();
         if (electricLocation !== "") {
             console.log(electricLocation);
-            var electricQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&location=" + electricLocation + "&radius=" + radius + "&ev_connector_type=" + evType + "&ev_charging_level" + evLevel + "&fuel_type=ELEC&limit=10";
+            var electricQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&location=" + electricLocation + "&radius=" + radius + "&ev_connector_type=" + evType + "&ev_charging_level=" + evLevel + "&fuel_type=ELEC&limit=10";
         } else {
             saveCoords();
-            electricQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&latitude=" + latitude + "&longitude=" + longitude + "&radius=" + radius + "&ev_connector_type=" + evType + "&ev_charging_level" + evLevel + "&fuel_type=ELEC&limit=10";
+            electricQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&latitude=" + latitude + "&longitude=" + longitude + "&radius=" + radius + "&ev_connector_type=" + evType + "&ev_charging_level=" + evLevel + "&fuel_type=ELEC&limit=10";
         }
+  
     
     $.ajax({
         url: electricQueryURL,
         method: "GET"
-
-    }).then(function (electricResponse) {
-        console.log(electricResponse)
-        for (i = 0; i < electricResponse.fuel_stations.length; i++) {
+     }).then(function(electricResponse) {
+       
+        trafficInfo(electricResponse, radius)
+        for (i=0; i < electricResponse.fuel_stations.length; i++){
+          
             // Variables that are being pulled
             var fuelStation = electricResponse.fuel_stations[i]
             var stationName = fuelStation.station_name;
@@ -160,8 +195,42 @@ function electricInfo() {
         }
     }
     )
+
 }
 
+    
+    //==============================================
+// Bounding box instructor helped "Anthony"
+
+function generateBoundingBox(lat, lng, radius) {
+    console.log(lat,lng)
+    lat = parseFloat(lat);
+    lng = parseFloat(lng);
+    radius = parseInt(radius);
+    var fixed = function(value) {
+      return value.toFixed(6);
+    };
+    console.log(lat,lng)
+    var latToMiles = (1/69) * radius;
+    var lngToMiles = (1/54) * radius;
+    var leftTop = [fixed(lat - latToMiles), fixed(lng - lngToMiles)];
+    var rightBottom = [fixed(lat + latToMiles), fixed(lng + lngToMiles)];
+    return leftTop.concat(rightBottom).join();
+  }
+
+
+function trafficInfo(pos) {
+  
+    const queryLocationUrl = "http://www.mapquestapi.com/traffic/v2/incidents?key=ANyNQWQRMCwYtIcEivl0YidZMG4FgAJc&boundingBox=" + generateBoundingBox(pos.latitude,pos.longitude, 25) + "&filters=construction,incidents,events,congestion";
+
+    $.ajax({
+        url: queryLocationUrl,
+        method: "GET",
+    }).then(function (response) {
+        console.log(response)
+    })
+  
+  
 function fuelInfo() {
     var fuelAPIKey= "Th9TbtOCXmrJhKEo2F7cW2Srorv25I70XaPcviiw";
     var fuelLocation = encodeURI($("#address").val());
@@ -177,8 +246,11 @@ function fuelInfo() {
     $.ajax({
         url: fuelQueryURL,
         method: "GET"
+
+
     }).then(function(fuelResponse) {
         console.log(fuelQueryURL)
+       trafficInfo(fuelResponse, radius)
         for (i=0; i < fuelResponse.fuel_stations.length; i++){
             
             // Variables that are being pulled
