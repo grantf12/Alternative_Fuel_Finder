@@ -35,11 +35,13 @@ if("geolocation" in navigator){
 }
 
 
+//=======================================================
+//Global Vars
+//=======================================================
+//Json web token credentials
 
 // Geo location variables
 // to retrieve current user postion
-
-var userpostion = getLocation();
 
 //========================================================================
 // Geo Location functions
@@ -64,7 +66,9 @@ function showPosition(position) {
 $("#select-vehicle-type").on("change", function () {
     if ($("#select-vehicle-type :selected").val() === "gas") {
         $("#gas-container").attr("class", "container m-3 mt-5 has-text-centered");
-    } else {
+    }else if($("#select-vehicle-type :selected").val() === "electric") {
+        $('#evConnector-container').attr("class","container mt-5 has-text-centered");
+        $('#evChargerType-container').attr("class","container mt-5 has-text-centered");
         $("#gas-container").attr("class", "container m-3 mt-5 has-text-centered is-hidden");
     }
 })
@@ -92,15 +96,13 @@ function findStations(position) {
     //var lon = position.coords.longitude;
     //var lat = position.coords.latitude;
 
-    const queryLocationUrl = "https://fuel-v2.cc.api.here.com/fuel/stations.json?app_id=" + restAppId + "&app_code=" + restApiKey;// +// "&prox";
+    const queryLocationUrl = "";
 
     $.ajax({
         url: queryLocationUrl,
         method: "GET",
-        dataType:"jsonp"
     }).then(function (response) {
-        console.log(queryLocationUrl);
-        console.log(response);
+
     })
 }
 
