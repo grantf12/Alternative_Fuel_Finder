@@ -33,8 +33,8 @@
     </div>
     <!-- Gas or Electric -->
 
-    <div class="container m-3 mt-5 has-text-centered">
-        <div class="row m-5 has-text-centered">
+    <div class="container mt-5 has-text-centered">
+        <div class="row has-text-centered">
             <div class="select is-rounded is-dark is-large" id="select-vehicle-type">
                 <select>
                     <option>Select type of vehicle</option>
@@ -45,8 +45,7 @@
         </div>
         <!-- Radius Select -->
 
-        <div class="row m-5 has-text-centered">
-
+        <div class="row mt-5 has-text-centered" id="radius-container">
             <div class="select is-rounded is-dark is-large" id="select-radius">
                 <select>
                     <option>Select search radius</option>
@@ -58,7 +57,7 @@
             </div>
         </div>
         <!-- Brand Select-->
-        <div class="row m-5 has-text-centered">
+        <div class="row mt-5 has-text-centered">
 
             <div class="select is-rounded is-dark is-large" id="select-brand">
                 <select>
@@ -80,7 +79,7 @@
     </div>
 
     <!-- Gas Container -->
-    <div class="container m-3 mt-5 has-text-centered is-hidden" id="gas-container">
+    <div class="container mt-5 has-text-centered is-hidden" id="gas-container">
         <!-- Gas Fuel Type Select -->
         <div class="select is-rounded is-dark is-large" id="select-fuel-type">
             <select>
@@ -119,10 +118,10 @@
     </div>
     <!-- Address or Current Location -->
     <div class="container mt-5 has-text-centered">
-        <div class="row m-5">
+        <div class="row">
             <label class="label is-size-4">Address (or use Current Location): </label>
         </div>
-        <div class="container columns m-5 is-centered">
+        <div class="container mt-5 columns is-centered">
             <div class="control has-icons-left">
 
                 <input class="input is-large column" type="text" placeholder="Current Location" id="address">
@@ -132,10 +131,9 @@
                 </span>
             </div>
         </div>
-    </div>
 
     <!-- Sort Select-->
-    <div class="row m-5 has-text-centered">
+    <div class="row mt-5 has-text-centered">
         <div class="select is-rounded is-dark is-large" id="select-radius">
             <select>
                 <option>Sort By:</option>
@@ -146,10 +144,11 @@
         </div>
     </div>
     <!-- Submit Button-->
-    <div class="row m-5 has-text-centered">
-        <div class="container m-3 mt-5 has-text-centered" id="submit-container">
+    <div class="row mt-5 has-text-centered">
+        <div class="container has-text-centered" id="submit-container">
             <input class="button is-large is-rounded" type="submit" value="Start Your Search" id="submit-button">
         </div>
+    </div>
     </div>
 
     <!--Modal for search results-->
