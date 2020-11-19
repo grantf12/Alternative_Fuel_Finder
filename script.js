@@ -119,6 +119,8 @@ $("#current-location").on("click", function () {
 //close modal
 $("#close-modal").on("click", function () {
     $("#results").attr("class", "modal");
+    $("#list").html("");
+    $("#map").html("");
 })
 
 //==============================================
@@ -213,7 +215,7 @@ function electricInfo() {
             $(col3).append(EV, EV2, row2);
             $(row2).append(distanceTitle, distanceAmount)
             $(split).append(container1);
-            $('#modal-card').append(split); 
+            $('#list').append(split); 
             
         }
 
@@ -285,7 +287,7 @@ function fuelInfo() {
             $(col3).append(EV, EV2, row2);
             $(row2).append(distanceTitle, distanceAmount)
             $(split).append(container1);
-            $('#modal-card').append(split);
+            $('#list').append(split);
 
         }
         var googleMap = $('<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDDdLFBl_Wnn1TbZojvb4jZTH3rgDDWh8&callback=initMap&libraries=&v=weekly" defer>');
