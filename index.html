@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Fuel Finder</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="CssFile/style.css">
     <script src="https://kit.fontawesome.com/14c899f3d3.js" crossorigin="anonymous"></script>
     <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
@@ -19,16 +20,16 @@
         <div class="navbar-brand">
             <a class="navbar-item title m-3" href="index2.html"> <span class="icon is-medium m-2">
                     <i class="fas fa-gas-pump"></i>
-                </span><span> Fuel Finder</a></span>
+                </span><span> Alternative Fuel Finder</a></span>
     </nav>
     <!-- Header -->
     <div class="container mt-4">
 
         <h1 class="title has-text-centered">
-            Find fueling stations near you!
+            Find alternative fueling stations near you!
         </h1>
         <p class="subtitle has-text-centered">
-            Cheapest? Closest? Want to compare savings? You decide!
+           Need an electric charging station? Or the closest biofuel fueling station?
         </p>
     </div>
     <!-- Gas or Electric -->
@@ -56,49 +57,28 @@
                 </select>
             </div>
         </div>
-        <!-- Brand Select-->
-        <!-- <div class="row mt-5 has-text-centered">
-
-            <div class="select is-rounded is-dark is-large" id="select-brand">
-                <select>
-                    <option>Select Gas Station Brand (Optional)</option>
-                    <option value="7-Eleven">7-Eleven</option>
-                    <option value="Example1">Example1</option>
-                    <option value="Example3">Example3</option>
-                    <option value="Example4">Example4</option>
-                    <option value="Example5">Example5</option>
-                    <option value="Example6">Example6</option>
-                    <option value="Example7">Example7</option>
-                    <option value="Example8">Example8</option>
-                    <option value="Example9">Example9</option>
-                    <option value="Example10">Example10</option>
-                    <option value="Example11">Example11</option>
-                </select>
-            </div>
-        </div>
-    </div> -->
-
+    </div>
     <!-- Gas Container -->
     <div class="container mt-5 has-text-centered is-hidden" id="gas-container">
         <!-- Gas Fuel Type Select -->
         <div class="select is-rounded is-dark is-large" id="select-fuel-type">
             <select>
-                <option value="BD,CNG,E85,HY,LNG,LPG" >Select fuel type</option>
-                <option value="BD,CNG,E85,HY,LNG,LPG" >All</option>
-                <option value="BD" >Biodiesel</option>
-                <option value="CNG" >Compressed Natural Gas</option>
-                <option value="E85" >Ethanol</option>
-                <option value="HY" >Hydeogen</option>
-                <option value="LNG" >Liquified Natural Gas</option>
-                <option value="LPG" >Propane</option>
+                <option value="all">Select fuel type</option>
+                <option value="all">All</option>
+                <option value="BD">Biodiesel</option>
+                <option value="CNG">Compressed Natural Gas</option>
+                <option value="E85">Ethanol</option>
+                <option value="HY">Hydrogen</option>
+                <option value="LNG">Liquified Natural Gas</option>
+                <option value="LPG">Propane</option>
             </select>
         </div>
     </div>
-      <!-- EV connector and charge lvl-->
-      <div class="container mt-5 has-text-centered is-hidden" id="evConnector-container">
+    <!-- EV connector and charge lvl-->
+    <div class="container mt-5 has-text-centered is-hidden" id="evConnector-container">
         <div class="select is-rounded is-dark is-large" id="select-connector-type">
             <select>
-                <option>Select Connector Type</option>
+                <option value="all">Select Connector Type</option>
                 <option value="all">All</option>
                 <option value="J1772">J1772</option>
                 <option value="CCS">CCS</option>
@@ -110,7 +90,7 @@
     <div class="container mt-5 has-text-centered is-hidden" id="ev-level-container">
         <div class="select is-rounded is-dark is-large" id="select-charger-level">
             <select>
-                <option>Select Charging Level</option>
+                <option value="all">Select Charging Level</option>
                 <option value="all">All</option>
                 <option value="1">Level 1</option>
                 <option value="2">Level 2</option>
@@ -122,38 +102,31 @@
     <!-- Address or Current Location -->
     <div class="container mt-5 has-text-centered">
         <div class="row">
-            <label class="label is-size-4">Address (or use Current Location): </label>
+            <label class="label is-size-4">Address (or click Current Location button): </label>
         </div>
         <div class="container mt-5 is-centered">
-            <div class="row columns is-centered is-vcentered">
-            <div class="control">
+            <div class="row columns mb-5 is-centered is-vcentered">
+                <div class="control" id="address-container">
 
-                <input class="input is-large column" type="text" placeholder="Current Location" id="address">
-            </div>
-                <span class="icon button is-large" id = "current-location">
+                    <input class="input is-medium column" type="text" placeholder="Current Location" id="address">
+                </div>
+                <span class="icon button is-large" id="current-location">
                     <i class="fas fa-location-arrow is-vcentered"></i>
                 </span>
             </div>
         </div>
+        <!-- Submit Button-->
+        <div class="row mb-5 has-text-centered">
+            <div class="container has-text-centered" id="submit-container">
+                <input class="button is-large is-rounded" type="submit" value="Start Your Search" id="submit-button">
+            </div>
+        </div>
+    </div>
 
-    <!-- Sort Select-->
-    <div class="row mt-5 has-text-centered">
-        <div class="select is-rounded is-dark is-large" id="select-radius">
-            <select>
-                <option>Sort By:</option>
-                <option value="price-low">Price (Low to High)</option>
-                <option value="distance-close">Distance (Closest)</option>
-                <option value="savings">Savings (Most to Least)</option>
-            </select>
+    <footer class="footer">
+        <div class="content has-text-centered">
         </div>
-    </div>
-    <!-- Submit Button-->
-    <div class="row mt-5 has-text-centered">
-        <div class="container has-text-centered" id="submit-container">
-            <input class="button is-large is-rounded" type="submit" value="Start Your Search" id="submit-button">
-        </div>
-    </div>
-    </div>
+    </footer>
 
     <!--Modal for search results-->
     <div class="modal" id="results">
@@ -163,25 +136,18 @@
             <div class="modal-card">
                 <header class="modal-card-head">
                     <p class="modal-card-title">Search Results:</p>
-                    <p class="card-header-title">
-                        Component
-                      </p>
-                      <a href="#" class="card-header-icon" aria-label="more options">
-                        <span class="icon">
-                          <i class="fas fa-angle-down" aria-hidden="true"></i>
-                        </span>
-                      </a>
                     <button class="delete" aria-label="close" id="close-modal"></button>
                 </header>
                 <section class="modal-card-body" id="modal-card">
+                    <div class="container has-text-centered" id="map"></div>
                     <!--Example results to see Modal in action-->
-                    
+
                 </section>
             </div>
         </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="script.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="script.js"></script>
 </body>
 
 </html>
