@@ -1,6 +1,7 @@
 var latitude;
 var longitude;
 var locations = [];
+var saveSettings= [];
 // document.cookie = 'cookie2=value2; SameSite=None; Secure';
 
 //========================================================================
@@ -10,7 +11,7 @@ var locations = [];
 function initMap() {
     var searchLoc = { lat: latitude, lng: longitude };
     var map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 14,
+        zoom: 13,
         center: searchLoc,
     });
     for (var m = 0; m < locations.length; m++)
@@ -80,8 +81,6 @@ function checkLocation() {
     }
 }
 
-
-
 //open modal
 $("#submit-button").on("click", function () {
     var radius = $("#select-radius :selected").val();
@@ -119,7 +118,24 @@ $("#current-location").on("click", function () {
 //close modal
 $("#close-modal").on("click", function () {
     $("#results").attr("class", "modal");
+    $("#list").html("");
+    $("#map").html("");
+    
 })
+
+function storeSettings() {
+    localStorage.setItem("settings", JSON.stringify(saveSettings));
+}
+
+function renderSettings() {
+    var saveSettings = JSON.parse(localStorage.getItem("settings"));
+    if (localStorage.getItem("settings") === null) {
+        return;
+    }
+    $("#select-vehicle-type").find("option[value=" + saveSettings[0].type).attr('selected','selected');
+    $("#address").attr("value", saveSettings[0].location);
+}
+
 
 //==============================================
 // Bounding box instructor helped "Anthony"
@@ -154,20 +170,25 @@ $("#close-modal").on("click", function () {
 // }
 
 function electricInfo() {
+    var typeVehicle = "electric"
     var electricAPIKey = "Th9TbtOCXmrJhKEo2F7cW2Srorv25I70XaPcviiw";
-    var electricLocation = encodeURI($("#address").val());
+    var address = ($("#address").val());
+    var electricLocation = encodeURI(address);
     var radius = $("#select-radius :selected").val();
     var evType = $("#select-connector-type :selected").val()
     var evLevel= $("#select-charger-level :selected").val();
     if (electricLocation !== "") {
-        console.log(electricLocation);
         electricQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&location=" + electricLocation + "&radius=" + radius + "&ev_connector_type=" + evType + "&ev_charging_level=" + evLevel + "&fuel_type=ELEC&limit=10";
-        console.log(electricQueryURL);
+        var locationSave = address
     } else {
         saveCoords();
         electricQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&latitude=" + latitude + "&longitude=" + longitude + "&radius=" + radius + "&ev_connector_type=" + evType + "&ev_charging_level=" + evLevel + "&fuel_type=ELEC&limit=10";
-        console.log(electricQueryURL);
+        var locationSave = latitude + ", " + longitude;
     }
+    saveSettings.push({
+        type: typeVehicle,
+        location: locationSave
+    })
     $.ajax({
         url: electricQueryURL,
         method: "GET"
@@ -213,28 +234,37 @@ function electricInfo() {
             $(col3).append(EV, EV2, row2);
             $(row2).append(distanceTitle, distanceAmount)
             $(split).append(container1);
-            $('#modal-card').append(split); 
+            $('#list').append(split);  
             
         }
 
         var googleMap = $('<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDDdLFBl_Wnn1TbZojvb4jZTH3rgDDWh8&callback=initMap&libraries=&v=weekly" defer>');
-        $("#modal-card").append(googleMap);
+        $("#map").append(googleMap);
     }
     )
+    storeSettings();
 }
 
 function fuelInfo() {
+    var typeVehicle = "gas";
     var fuelAPIKey = "Th9TbtOCXmrJhKEo2F7cW2Srorv25I70XaPcviiw";
-    var fuelLocation = encodeURI($("#address").val());
+    var address = ($("#address").val());
+    var fuelLocation = encodeURI(address);
     var radius = $("#select-radius :selected").val();
     var fuelType = $('#select-fuel-type :selected').val();
 
     if (fuelLocation !== "") {
         console.log(fuelLocation);
         var fuelQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + fuelAPIKey + "&location=" + fuelLocation + "&radius=" + radius + "&fuel_type=" + fuelType + "&limit=10";
+        var locationSave = address;
     } else {
         var fuelQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + fuelAPIKey + "&latitude=" + latitude + "&longitude=" + longitude + "&radius=" + radius + "&fuel_type=" + fuelType + "&limit=10";
+        var locationSave = latitude + ", " + longitude;
     }
+    saveSettings.push({
+        type: typeVehicle,
+        location: locationSave
+    })
     $.ajax({
         url: fuelQueryURL,
         method: "GET"
@@ -285,10 +315,13 @@ function fuelInfo() {
             $(col3).append(EV, EV2, row2);
             $(row2).append(distanceTitle, distanceAmount)
             $(split).append(container1);
-            $('#modal-card').append(split);
+            $('#list').append(split); 
 
         }
         var googleMap = $('<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDDdLFBl_Wnn1TbZojvb4jZTH3rgDDWh8&callback=initMap&libraries=&v=weekly" defer>');
-        $("#modal-card").append(googleMap);
+        $("#map").append(googleMap);
     })
+    storeSettings();
 }
+
+renderSettings();
