@@ -65,11 +65,11 @@ function showPosition(position) {
 
 $("#select-vehicle-type").on("change", function () {
     if ($("#select-vehicle-type :selected").val() === "gas") {
-        $("#gas-container").attr("class", "container m-3 mt-5 has-text-centered");
+        $("#gas-container").attr("class", "container mt-5 has-text-centered");
     }else if($("#select-vehicle-type :selected").val() === "electric") {
         $('#evConnector-container').attr("class","container mt-5 has-text-centered");
         $('#evChargerType-container').attr("class","container mt-5 has-text-centered");
-        $("#gas-container").attr("class", "container m-3 mt-5 has-text-centered is-hidden");
+        $("#gas-container").attr("class", "container mt-5 has-text-centered is-hidden");
     }
 })
 
@@ -80,6 +80,13 @@ $("#select-vehicle-type").on("change", function () {
 
 //open modal
 $("#submit-button").on("click", function(){
+    var radius= $("#select-radius :selected").val();
+    if (radius === "Select search radius") {
+        $("#select-radius").attr("class", "select is-rounded is-danger is-large is-focused");
+        $("#select-radius").append('<span class="icon is-small is-left"><i class="fas fa-exclamation-triangle"></i> </span>');
+        $("#radius-container").attr("class", "control mt-5 has-text-centered has-icons-left");
+        return;
+    }
     $("#results").attr("class", "modal is-active");
     electricInfo();
 })
@@ -108,10 +115,15 @@ function findStations(position) {
 
 function electricInfo() {
     var electricAPIKey= "Th9TbtOCXmrJhKEo2F7cW2Srorv25I70XaPcviiw";
-    var electricLocation = $("#address").val().trim();
+    var electricLocation = encodeURI($("#address").val());
     var radius= $("#select-radius :selected").val();
-    var electricQueryURL= "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&latitude=" + latitude + "&longitude=" + longitude + "&radius=" + radius+ "&fuel_type=ELEC&limit=10";
-    console.log(electricQueryURL);
+    
+    if (electricLocation !== "") {
+        console.log(electricLocation);
+    var electricQueryURL= "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&location=" + electricLocation +  "&radius=" + radius+ "&fuel_type=ELEC&limit=10";
+    } else {
+        var electricQueryURL= "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&latitude=" + latitude + "&longitude=" + longitude + "&radius=" + radius+ "&fuel_type=ELEC&limit=10";
+    }
     $.ajax({
         url: electricQueryURL,
         method: "GET"
@@ -132,28 +144,33 @@ function electricInfo() {
             
             
             // Variables that need to be made and appended
+            var container1 = $('<div class="container p-3 mt-1"></div>')
                 var row = $('<div class="row"></div>')
                     var col1 = $('<div class="columns"></div>')
                         var col2 = $('<div class="column is-8"></div>')
-                            var title = $('<div class="title" id="name"></div>')
+                            var title = $('<div class="subtitle" id="name"></div>')
                                 $(title).text(stationName);
-                            var addy = $('<p class="row subtitle" id="address"></p>')
-                                $(addy).text(stationAddress)
+                            var addy = $('<p class="row h3" id="address"></p>')
+                                $(addy).text(stationAddress);
                         var col3 = $('<div class="column is-4"></div>')
                             var EV = $('<p class="row has-text-weight-bold has-text-right">EV Type:</p>')
                             var EV2 = $('<p class="has-text-right" id="EVType"></p>') 
                                 $(EV2).text(evType);
-                        var row2 = $('<div class="row"</div>')
+                        var row2 = $('<div class="row"></div>')
                             var distanceTitle = $('<p class="row has-text-weight-bold has-text-right">Distance:</p>')
                             var distanceAmount = $('<p class="has-text-right" id="goingTheDistance"></p>')
-                                $(distanceAmount).text(howFar)
+                                $(distanceAmount).text(howFar.toFixed(2) + "mi");
+                var split = $('<header class="card-header"></header>');
             
             // Appending each var to a card-body then append to #modal-card
+            $(container1).append(row);
             $(row).append(col1);
-            $(col1).append(col2);
-            $(col2).append(title, addy, col3);
-            $(col3).append(EV, EV2, row2, distanceTitle, distanceAmount);
-            $('#modal-card').append(row);
+            $(col1).append(col2, col3);
+            $(col2).append(title, addy);
+            $(col3).append(EV, EV2, row2);
+            $(row2).append(distanceTitle, distanceAmount)
+            $(split).append(container1);
+            $('#modal-card').append(split);
 
         }
     }
