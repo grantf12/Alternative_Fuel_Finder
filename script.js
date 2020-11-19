@@ -81,17 +81,34 @@ $("#close-modal").on("click", function () {
     $("#results").attr("class", "modal");
 })
 
-function electricInfo() {
-    var electricAPIKey = "Th9TbtOCXmrJhKEo2F7cW2Srorv25I70XaPcviiw";
-    var electricLocation = encodeURI($("#address").val());
-    var radius = $("#select-radius :selected").val();
+function selectEVType() {
+    if ($("#select-connector-type :selected").val() === "Select Connector Type") {
+        evType = "all";
+    } 
+    evType = $("#select-connector-type :selected").val();
+}
 
-    if (electricLocation !== "") {
-
-    var electricQueryURL= "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&location=" + electricLocation +  "&radius=" + radius+ "&fuel_type=ELEC&limit=10";
-    } else {
-        electricQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&latitude=" + latitude + "&longitude=" + longitude + "&radius=" + radius + "&fuel_type=ELEC&limit=10";
+function selectEVLevel() {
+    if ($("#select-charger-level :selected").val() === "Select Charger Type") {
+        evLevel = "all";
     }
+    evLevel = $("#select-charger-level :selected").val();
+}
+
+function electricInfo() {
+        var electricAPIKey = "Th9TbtOCXmrJhKEo2F7cW2Srorv25I70XaPcviiw";
+        var electricLocation = encodeURI($("#address").val());
+        var radius = $("#select-radius :selected").val();
+        selectEVType();
+        selectEVLevel();
+        if (electricLocation !== "") {
+            console.log(electricLocation);
+            var electricQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&location=" + electricLocation + "&radius=" + radius + "&ev_connector_type=" + evType + "&ev_charging_level" + evLevel + "&fuel_type=ELEC&limit=10";
+        } else {
+            saveCoords();
+            electricQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&latitude=" + latitude + "&longitude=" + longitude + "&radius=" + radius + "&ev_connector_type=" + evType + "&ev_charging_level" + evLevel + "&fuel_type=ELEC&limit=10";
+        }
+    
     $.ajax({
         url: electricQueryURL,
         method: "GET"
