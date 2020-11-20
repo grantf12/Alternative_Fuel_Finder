@@ -21,16 +21,6 @@ function initMap() {
         });
 }
 
-function showPosition(position) {
-    latitude = position.coords.latitude;
-    longitude = position.coords.longitude;
-    console.log(latitude);
-    console.log(longitude);
-    console.log(position.coords.latitude + "" + position.coords.longitude);
-    trafficInfo(position.coords);
-   };
-
-
 function findMe() {
     return new Promise(function (resolve, reject) {
         navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -70,6 +60,28 @@ function checkLocation() {
         $("#address").append('<span class="icon is-small is-left"><i class="fas fa-exclamation-triangle"></i> </span>');
         $("#address-container").attr("class", "control mt-5 has-text-centered has-icons-left");
     }
+}
+//locaal storage
+function storeSettings() {
+    localStorage.setItem("settings", JSON.stringify(saveSettings));
+}
+
+function renderSettings() {
+    var saveSettings = JSON.parse(localStorage.getItem("settings"));
+    if (localStorage.getItem("settings") === null) {
+        return;
+    }
+    $("#select-vehicle-type").find("option[value=" + saveSettings[0].type).attr('selected','selected');
+    if ($("#select-vehicle-type :selected").val() === "gas") {
+        $("#gas-container").attr("class", "container mt-5 has-text-centered");
+        $('#evConnector-container').attr("class", "container mt-5 has-text-centered is-hidden");
+        $('#ev-level-container').attr("class", "container mt-5 has-text-centered is-hidden")
+    } else if ($("#select-vehicle-type :selected").val() === "electric") {
+        $('#evConnector-container').attr("class", "container mt-5 has-text-centered");
+        $('#ev-level-container').attr("class", "container mt-5 has-text-centered");
+        $("#gas-container").attr("class", "container mt-5 has-text-centered is-hidden");
+    }
+   
 }
 
 //open modal
@@ -126,7 +138,6 @@ function renderSettings() {
     $("#address").attr("value", saveSettings[0].location);
 }
 
-
 function electricInfo() {
     var typeVehicle = "electric"
     var electricAPIKey = "Th9TbtOCXmrJhKEo2F7cW2Srorv25I70XaPcviiw";
@@ -136,16 +147,14 @@ function electricInfo() {
     var evType = $("#select-connector-type :selected").val()
     var evLevel= $("#select-charger-level :selected").val();
     if (electricLocation !== "") {
+        console.log(electricLocation);
         electricQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&location=" + electricLocation + "&radius=" + radius + "&ev_connector_type=" + evType + "&ev_charging_level=" + evLevel + "&fuel_type=ELEC&limit=10";
-        var locationSave = address
     } else {
         saveCoords();
         electricQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&latitude=" + latitude + "&longitude=" + longitude + "&radius=" + radius + "&ev_connector_type=" + evType + "&ev_charging_level=" + evLevel + "&fuel_type=ELEC&limit=10";
-        var locationSave = latitude + ", " + longitude;
     }
     saveSettings.push({
         type: typeVehicle,
-        location: locationSave
     })
     $.ajax({
         url: electricQueryURL,
@@ -192,8 +201,7 @@ function electricInfo() {
             $(col3).append(EV, EV2, row2);
             $(row2).append(distanceTitle, distanceAmount)
             $(split).append(container1);
-            $('#list').append(split);  
-
+            $('#list').append(split); 
             
         }
 
@@ -215,14 +223,11 @@ function fuelInfo() {
     if (fuelLocation !== "") {
         console.log(fuelLocation);
         var fuelQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + fuelAPIKey + "&location=" + fuelLocation + "&radius=" + radius + "&fuel_type=" + fuelType + "&limit=10";
-        var locationSave = address;
     } else {
         var fuelQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + fuelAPIKey + "&latitude=" + latitude + "&longitude=" + longitude + "&radius=" + radius + "&fuel_type=" + fuelType + "&limit=10";
-        var locationSave = latitude + ", " + longitude;
     }
     saveSettings.push({
         type: typeVehicle,
-        location: locationSave
     })
     $.ajax({
         url: fuelQueryURL,
@@ -274,7 +279,7 @@ function fuelInfo() {
             $(col3).append(EV, EV2, row2);
             $(row2).append(distanceTitle, distanceAmount)
             $(split).append(container1);
-            $('#list').append(split); 
+            $('#list').append(split);
 
         }
         var googleMap = $('<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDDdLFBl_Wnn1TbZojvb4jZTH3rgDDWh8&callback=initMap&libraries=&v=weekly" defer>');
