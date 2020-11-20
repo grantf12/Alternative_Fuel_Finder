@@ -21,15 +21,6 @@ function initMap() {
         });
 }
 
-function showPosition(position) {
-    latitude = position.coords.latitude;
-    longitude = position.coords.longitude;
-    console.log(latitude);
-    console.log(longitude);
-    console.log(position.coords.latitude + "" + position.coords.longitude);
-    trafficInfo(position.coords);
-   };
-
 
 function findMe() {
     return new Promise(function (resolve, reject) {
