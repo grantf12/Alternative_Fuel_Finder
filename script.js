@@ -56,7 +56,7 @@ function checkLocation() {
     if ($("#address").val() !== "") {
         return;
     } else {
-        $("#address").attr("class", "input is-large column is-danger");
+        $("#address").attr("class", "has-text-centered input is-large column is-danger");
         $("#address").append('<span class="icon is-small is-left"><i class="fas fa-exclamation-triangle"></i> </span>');
         $("#address-container").attr("class", "control mt-5 has-text-centered has-icons-left");
     }
@@ -86,6 +86,7 @@ function renderSettings() {
 
 //open modal
 $("#submit-button").on("click", function () {
+    checkLocation();
     var radius = $("#select-radius :selected").val();
     if (radius === "Select search radius") {
         $("#select-radius").attr("class", "select is-rounded is-danger is-large is-focused");
@@ -136,6 +137,7 @@ function electricInfo() {
     var evLevel= $("#select-charger-level :selected").val();
     if (electricLocation !== "") {
         electricQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&location=" + electricLocation + "&radius=" + radius + "&ev_connector_type=" + evType + "&ev_charging_level=" + evLevel + "&fuel_type=ELEC&limit=10";
+        
     } else {
         saveCoords();
         electricQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&latitude=" + latitude + "&longitude=" + longitude + "&radius=" + radius + "&ev_connector_type=" + evType + "&ev_charging_level=" + evLevel + "&fuel_type=ELEC&limit=10";
