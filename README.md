@@ -2,7 +2,7 @@
 A website tool to find the nearest gas , and Ev charging station that uses your location to create a  location radius that you choose. Then Api will return results for the given location as well as a Map in a modal. Inside the modal users can scroll the results and find the detailed info they need. On a seperate tab users can see the traffic and construction that may impede the route to his/her/non-binary endpoint. 
 
 ## Link to Deployed Website
-click [here](https://grantf12.github.io/Project_1/index.html)
+click [here](https://grantf12.github.io/Alternative_Fuel_Finder/index.html)
 
 ### Wesite in Action
 ![Deployed Website](CssFile/Fuel_Finder.gif)
