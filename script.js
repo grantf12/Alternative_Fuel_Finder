@@ -19,6 +19,8 @@ function initMap() {
             position: locations[m],
             map: map,
         });
+
+        
 }
 
 function getLocation() {
