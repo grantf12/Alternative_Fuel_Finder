@@ -21,15 +21,6 @@ function initMap() {
         });
 }
 
-function getLocation() {
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-        console.log("Geolocation is not supported by this browser.");
-    }
-};
-
 function showPosition(position) {
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
@@ -135,38 +126,6 @@ function renderSettings() {
     $("#address").attr("value", saveSettings[0].location);
 }
 
-
-//==============================================
-// Bounding box instructor helped "Anthony"
-
-// function generateBoundingBox(lat, lng, radius) {
-//     console.log(lat,lng)
-//     lat = parseFloat(lat);
-//     lng = parseFloat(lng);
-//     radius = parseInt(radius);
-//     var fixed = function(value) {
-//       return value.toFixed(6);
-//     };
-//     console.log(lat,lng)
-//     var latToMiles = (1/69) * radius;
-//     var lngToMiles = (1/54) * radius;
-//     var leftTop = [fixed(lat - latToMiles), fixed(lng - lngToMiles)];
-//     var rightBottom = [fixed(lat + latToMiles), fixed(lng + lngToMiles)];
-//     return leftTop.concat(rightBottom).join();
-//   }
-
-
-// function trafficInfo(pos) {
-  
-//     const queryLocationUrl = "http://www.mapquestapi.com/traffic/v2/incidents?key=ANyNQWQRMCwYtIcEivl0YidZMG4FgAJc&boundingBox=" + generateBoundingBox(pos.latitude,pos.longitude, 25) + "&filters=construction,incidents,events,congestion";
-
-//     $.ajax({
-//         url: queryLocationUrl,
-//         method: "GET",
-//     }).then(function (response) {
-//         console.log(response)
-//     })
-// }
 
 function electricInfo() {
     var typeVehicle = "electric"
