@@ -125,6 +125,18 @@ $("#close-modal").on("click", function () {
     $("#map").html("");
 })
 
+function storeSettings() {
+    localStorage.setItem("settings", JSON.stringify(saveSettings));
+}
+
+function renderSettings() {
+    var saveSettings = JSON.parse(localStorage.getItem("settings"));
+    if (localStorage.getItem("settings") === null) {
+        return;
+    }
+    $("#select-vehicle-type").find("option[value=" + saveSettings[0].type).attr('selected','selected');
+    $("#address").attr("value", saveSettings[0].location);
+}
 
 function electricInfo() {
     var typeVehicle = "electric"
