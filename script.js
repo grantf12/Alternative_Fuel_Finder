@@ -56,7 +56,7 @@ function checkLocation() {
     if ($("#address").val() !== "") {
         return;
     } else {
-        $("#address").attr("class", "input is-large column is-danger");
+        $("#address").attr("class", "has-text-centered input is-large column is-danger");
         $("#address").append('<span class="icon is-small is-left"><i class="fas fa-exclamation-triangle"></i> </span>');
         $("#address-container").attr("class", "control mt-5 has-text-centered has-icons-left");
     }
@@ -86,6 +86,7 @@ function renderSettings() {
 
 //open modal
 $("#submit-button").on("click", function () {
+    checkLocation();
     var radius = $("#select-radius :selected").val();
     if (radius === "Select search radius") {
         $("#select-radius").attr("class", "select is-rounded is-danger is-large is-focused");
@@ -147,8 +148,8 @@ function electricInfo() {
     var evType = $("#select-connector-type :selected").val()
     var evLevel= $("#select-charger-level :selected").val();
     if (electricLocation !== "") {
-        console.log(electricLocation);
         electricQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&location=" + electricLocation + "&radius=" + radius + "&ev_connector_type=" + evType + "&ev_charging_level=" + evLevel + "&fuel_type=ELEC&limit=10";
+        
     } else {
         saveCoords();
         electricQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + electricAPIKey + "&latitude=" + latitude + "&longitude=" + longitude + "&radius=" + radius + "&ev_connector_type=" + evType + "&ev_charging_level=" + evLevel + "&fuel_type=ELEC&limit=10";
@@ -160,7 +161,6 @@ function electricInfo() {
         url: electricQueryURL,
         method: "GET"
     }).then(function (electricResponse) {
-        console.log(electricResponse)
         for (i = 0; i < electricResponse.fuel_stations.length; i++) {
 
             // Variables that are being pulled
@@ -221,7 +221,6 @@ function fuelInfo() {
     var fuelType = $('#select-fuel-type :selected').val();
 
     if (fuelLocation !== "") {
-        console.log(fuelLocation);
         var fuelQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + fuelAPIKey + "&location=" + fuelLocation + "&radius=" + radius + "&fuel_type=" + fuelType + "&limit=10";
     } else {
         var fuelQueryURL = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=" + fuelAPIKey + "&latitude=" + latitude + "&longitude=" + longitude + "&radius=" + radius + "&fuel_type=" + fuelType + "&limit=10";
@@ -233,7 +232,6 @@ function fuelInfo() {
         url: fuelQueryURL,
         method: "GET"
     }).then(function (fuelResponse) {
-        console.log(fuelQueryURL)
         for (i = 0; i < fuelResponse.fuel_stations.length; i++) {
 
             // Variables that are being pulled
@@ -243,9 +241,6 @@ function fuelInfo() {
             var fuelKind = fuelStation.fuel_type_code
 
             var howFar = fuelStation.distance
-            console.log(stationName)
-            console.log(stationAddress)
-            console.log(howFar)
             optionLat = (fuelStation.latitude);
             optionLong = (fuelStation.longitude);
 
