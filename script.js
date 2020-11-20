@@ -126,6 +126,7 @@ $("#close-modal").on("click", function () {
     $("#map").html("");
 })
 
+//locaal storage
 function storeSettings() {
     localStorage.setItem("settings", JSON.stringify(saveSettings));
 }
@@ -136,7 +137,16 @@ function renderSettings() {
         return;
     }
     $("#select-vehicle-type").find("option[value=" + saveSettings[0].type).attr('selected','selected');
-    $("#address").attr("value", saveSettings[0].location);
+    if ($("#select-vehicle-type :selected").val() === "gas") {
+        $("#gas-container").attr("class", "container mt-5 has-text-centered");
+        $('#evConnector-container').attr("class", "container mt-5 has-text-centered is-hidden");
+        $('#ev-level-container').attr("class", "container mt-5 has-text-centered is-hidden")
+    } else if ($("#select-vehicle-type :selected").val() === "electric") {
+        $('#evConnector-container').attr("class", "container mt-5 has-text-centered");
+        $('#ev-level-container').attr("class", "container mt-5 has-text-centered");
+        $("#gas-container").attr("class", "container mt-5 has-text-centered is-hidden");
+    }
+
 }
 
 function electricInfo() {
